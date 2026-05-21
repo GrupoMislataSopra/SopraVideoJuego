@@ -1,15 +1,13 @@
 package org.sopra.rogueguild.view;
+
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Map;
 
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.controller.dto.BuyResponse;
-import org.sopra.rogueguild.view.components.BannerView;
-import org.sopra.rogueguild.view.components.BuyResultView;
-import org.sopra.rogueguild.view.components.MessageView;
-import org.sopra.rogueguild.view.components.PlayerView;
-import org.sopra.rogueguild.view.components.StockView;
+import org.sopra.rogueguild.view.components.*;
 
 public class ViewDisplay {
     private final BannerView banner;
@@ -17,6 +15,7 @@ public class ViewDisplay {
     private final PlayerView playerView;
     private final StockView stockView;
     private final BuyResultView buyResultView;
+    private final InventoryView inventoryView;
 
     public ViewDisplay() {
         this(System.out, 59);
@@ -28,6 +27,7 @@ public class ViewDisplay {
         this.playerView = new PlayerView(out);
         this.stockView = new StockView(out);
         this.buyResultView = new BuyResultView(messages);
+        this.inventoryView = new InventoryView(out);
     }
 
     public void landingPage() { banner.landingPage(); }
@@ -40,6 +40,10 @@ public class ViewDisplay {
 
     public void displayStock(Map<Integer, Item> itemMap, boolean isInPurchaseProcess) {
         stockView.displayStock(itemMap, isInPurchaseProcess);
+    }
+
+    public void displayInventory(List<Item> inventory, boolean inRemoveProcess) {
+        inventoryView.displayInventory(inventory, inRemoveProcess);
     }
 
     public void buyResult(BuyResponse r) {

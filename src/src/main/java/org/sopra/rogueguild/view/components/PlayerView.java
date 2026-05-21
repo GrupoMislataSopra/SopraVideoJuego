@@ -3,6 +3,8 @@ package org.sopra.rogueguild.view.components;
 import java.io.PrintStream;
 
 import static org.sopra.rogueguild.view.utils.Ansi.*;
+
+import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.Player;
 
 public class PlayerView {
@@ -18,7 +20,10 @@ public class PlayerView {
         out.println("       | ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
         out.println("       | ░    NOMBRE:        " + player.getName());
         out.println("       | ░    ORO:           " + player.getGold() + " monedas");
-        out.println("       | ░    INVENTARIO:    Vacío"); // TODO: Implement
-        out.println();
+        if (player.getInventory().isEmpty()) {
+            out.println("       | ░    INVENTARIO:    Vacío");
+        } else {
+            out.println("       | ░    INVENTARIO:    " + player.getInventory().size() + " objetos");
+        }       out.println();
     }
 }
