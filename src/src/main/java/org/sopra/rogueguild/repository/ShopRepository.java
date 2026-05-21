@@ -30,4 +30,8 @@ public class ShopRepository {
     public Map<Integer, Item> getAllStock() {
         return stock;
     }
+
+    public void addItem(int id, Item item) {
+        stock.put(id, item);
+    }
 }
