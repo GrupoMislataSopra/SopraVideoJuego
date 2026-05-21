@@ -8,7 +8,7 @@ public abstract class Item {
 
 
 
-    public Item(String name, int price, ItemCategory category, int basePrice) {
+    public Item(String name, int price, ItemCategory category) {
         this.name = name;
         this.price = price;
         this.category = category;
