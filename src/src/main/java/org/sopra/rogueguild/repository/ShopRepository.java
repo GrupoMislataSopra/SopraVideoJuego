@@ -1,5 +1,5 @@
 package org.sopra.rogueguild.repository;
-import java.util.HashMap;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
