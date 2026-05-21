@@ -6,11 +6,6 @@ public abstract class Item { ;
     private ItemCategory category;
     private final double basePrice;
 
-
-
-
-
-
     public Item(String name, int price, ItemCategory category) {
 
         this.name = name;
@@ -19,16 +14,11 @@ public abstract class Item { ;
         this.basePrice =  price;
 
     }
-
-
-
-
     public String getName() { return name; }
     public int getPrice() { return price; }
     public double getBasePrice() {
         return basePrice;
     }
     public String toString() { return name + " (" + price + " oro)"; }
-
 
 }
