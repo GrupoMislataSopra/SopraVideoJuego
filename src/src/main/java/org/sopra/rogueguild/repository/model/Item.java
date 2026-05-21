@@ -9,7 +9,7 @@ public abstract class Item { ;
 
 
 
-    public Item(String name, int price, ItemCategory category, double basePrice) {
+
 
     public Item(String name, int price, ItemCategory category) {
 
