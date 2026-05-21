@@ -130,7 +130,7 @@ public class ShopController {
         player.sell(item,amoutnGold);
         repository.addItem(id,item);
 
-        System.out.println("Has vendido este Item "+item.getName()+" ,por este precio "+amoutnGold+" monedas");
+        System.out.println("Has vendido este Item "+item.getName()+" ,por este precio "+amoutnGold+" monedas!");
 
     }
 }
