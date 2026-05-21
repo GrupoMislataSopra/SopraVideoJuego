@@ -1,6 +1,6 @@
 package org.sopra.rogueguild.repository.model;
 
-public abstract class Item { ;
+public abstract class Item {
     private String name;
     private int price;
     private ItemCategory category;
@@ -19,6 +19,8 @@ public abstract class Item { ;
     public double getBasePrice() {
         return basePrice;
     }
+    public ItemCategory getCategory() { return category; }
+    public void setPrice(int price) { this.price = price; }
     public String toString() { return name + " (" + price + " oro)"; }
 
 }
