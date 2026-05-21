@@ -1,25 +1,31 @@
 package org.sopra.rogueguild.repository.model;
 
-public abstract class Item {
+public abstract class Item { ;
     private String name;
     private int price;
     private ItemCategory category;
-    private final int basePrice;
+    private final double basePrice;
 
 
 
-    public Item(String name, int price, ItemCategory category, int basePrice) {
+    public Item(String name, int price, ItemCategory category, double basePrice) {
+
         this.name = name;
         this.price = price;
         this.category = category;
         this.basePrice =  price;
+
     }
+
+
 
 
     public String getName() { return name; }
     public int getPrice() { return price; }
-    public int getBasePrice() {
+    public double getBasePrice() {
         return basePrice;
     }
     public String toString() { return name + " (" + price + " oro)"; }
+
+
 }
