@@ -65,6 +65,21 @@ public class ShopController {
                     }
                     removeProcess(removeItemId);
                     break;
+                case 5:
+
+                    view.displayInventory(player.getInventory(),true);
+                    int sellItem;
+                    try {
+                        sellItem = Integer.parseInt(sc.nextLine());
+                    }
+                    catch (NumberFormatException n){
+                        view.showMessage("Introduce un numero valido");
+                        break;
+                    }
+                    sellProcess(sellItem);
+                    break;
+
+
                 case 0:
                     view.quitMessage();
                     break;
@@ -102,7 +117,20 @@ public class ShopController {
         view.showMessage("Has eliminado " + item.getName());
     }
 
-    private void sellProcess(Item item) {
-        //TODO Sell process
+    private void sellProcess(int id) {
+        Item item = player.getInventory().get(id-1);
+        double amoutnGold =  Math.round(item.getBasePrice() * 0.8/5)*5;
+        if(player.getInventory().isEmpty()){
+            return;
+        }
+        if (id < 1 || id > player.getInventory().size()) {
+            view.showMessage("Opción no válida.");
+            return;
+        }
+        player.sell(item,amoutnGold);
+        repository.addItem(id,item);
+
+        System.out.println("Has vendido este Item "+item.getName()+" ,por este precio "+amoutnGold+" monedas");
+
     }
 }
