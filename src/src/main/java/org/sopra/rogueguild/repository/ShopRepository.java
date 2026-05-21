@@ -6,6 +6,7 @@ import java.util.Map;
 import org.sopra.rogueguild.repository.model.Armor;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.Weapon;
+import org.sopra.rogueguild.repository.model.WorldEvent;
 
 public class ShopRepository {
     private Map<Integer, Item> stock;
@@ -33,5 +34,14 @@ public class ShopRepository {
 
     public void addItem(int id, Item item) {
         stock.put(id, item);
+    }
+
+    public void applyWorldEvent(WorldEvent event) {
+        for (Item item : stock.values()) {
+            if (event.getAffectedCategory() == null || item.getCategory() == event.getAffectedCategory()) {
+                int newPrice = (int) Math.round(item.getBasePrice() * event.getMultiplier() / 5) * 5;
+                item.setPrice(newPrice);
+            }
+        }
     }
 }
