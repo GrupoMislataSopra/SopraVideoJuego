@@ -23,8 +23,8 @@ public class Player {
     public List<Item> getInventory() {
         return new ArrayList<>(inventory);
     }
-    public void sell(Item item, int amount) {
-        this.gold += amount;
+    public void sell(Item item, double amount) {
+        this.gold += (int) amount;
         this.removeItem(item);
     }
 }

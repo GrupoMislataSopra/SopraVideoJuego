@@ -4,8 +4,8 @@ public class Weapon extends Item {
 
     private int damage;
 
-    public Weapon(String name, int price, int damage) {
-        super(name, price, ItemCategory.WEAPON);
+    public Weapon(String name, int price, int damage, double basePrice) {
+        super(name, price, ItemCategory.WEAPON,basePrice);
         this.damage = damage;
     }
 }
