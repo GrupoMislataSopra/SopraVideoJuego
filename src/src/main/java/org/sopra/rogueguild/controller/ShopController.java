@@ -26,29 +26,51 @@ public class ShopController {
         do {
             view.landingPage();
             view.playerStatus(player);
-            opt = Integer.parseInt(sc.nextLine());
+            try {
+                opt = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                view.showMessage("Introduce un número válido.");
+                opt = -1;
+                view.pressKeyMessage();
+                sc.nextLine();
+                continue;
+            }
             switch (opt) {
                 case 1:
                     view.displayStock(repository.getAllStock(), false);
                     break;
                 case 2:
                     view.displayStock(repository.getAllStock(), true);
-                    int itemId = Integer.parseInt(sc.nextLine());
+                    int itemId;
+                    try {
+                        itemId = Integer.parseInt(sc.nextLine());
+                    } catch (NumberFormatException e) {
+                        view.showMessage("Introduce un número válido.");
+                        break;
+                    }
                     BuyResponse buyResponse = buyProcess(itemId);
                     view.buyResult(buyResponse);
                     break;
                 case 3:
-                    // TODO Logic to sell and add products to stock
+                    view.displayInventory(player.getInventory(), false);
                     break;
                 case 4:
-                    // TODO Logic to ...
+                    view.displayInventory(player.getInventory(), true);
+                    int removeItemId;
+                    try {
+                        removeItemId = Integer.parseInt(sc.nextLine());
+                    } catch (NumberFormatException e) {
+                        view.showMessage("Introduce un número válido.");
+                        break;
+                    }
+                    removeProcess(removeItemId);
                     break;
                 case 0:
                     view.quitMessage();
                     break;
-                }
-                view.pressKeyMessage();
-                sc.nextLine();
+            }
+            view.pressKeyMessage();
+            sc.nextLine();
         } while (opt != 0);
     }
 
@@ -63,6 +85,21 @@ public class ShopController {
         player.buy(item);
         repository.removeItem(id);
         return BuyResponse.success(item);
+    }
+
+    private void removeProcess(int id) {
+        if (player.getInventory().isEmpty()) {
+            return;
+        }
+
+        if (id < 1 || id > player.getInventory().size()) {
+            view.showMessage("Opción no válida.");
+            return;
+        }
+
+        Item item = player.getInventory().get(id - 1);
+        player.removeItem(item);
+        view.showMessage("Has eliminado " + item.getName());
     }
 
     private void sellProcess(Item item) {

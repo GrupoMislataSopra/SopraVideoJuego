@@ -1,4 +1,5 @@
 package org.sopra.rogueguild.view.components;
+
 import static org.sopra.rogueguild.view.utils.Ansi.*;
 
 import java.io.PrintStream;
@@ -23,6 +24,8 @@ public class BannerView {
         out.println("|| | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ||");
         out.println("|| |  [1] Ver productos de la tienda               | ||");
         out.println("|| |  [2] Comprar un producto                      | ||");
+        out.println("|| |  [3] Ver mi inventario                        | ||");
+        out.println("|| |  [4] Tirar un objeto                          | ||");
         out.println("|| |" + c(Ansi.GRAY, "  [0] Salir                                    ") + "| ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");
