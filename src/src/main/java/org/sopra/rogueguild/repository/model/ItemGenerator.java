@@ -5,7 +5,7 @@ import java.util.*;
 
 public class ItemGenerator {
 
-public class Itemgenerator {
+
 
 
     private static final Random random = new Random();
@@ -81,6 +81,6 @@ public class Itemgenerator {
 
     }
 }
-}
+
 
 
