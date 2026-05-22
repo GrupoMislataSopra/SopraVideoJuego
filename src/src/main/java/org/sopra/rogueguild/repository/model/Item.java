@@ -4,23 +4,21 @@ public abstract class Item {
     private String name;
     private int price;
     private ItemCategory category;
-    private final double basePrice;
+    private final int basePrice;
 
     public Item(String name, int price, ItemCategory category) {
-
         this.name = name;
         this.price = price;
         this.category = category;
         this.basePrice =  price;
-
     }
+
     public String getName() { return name; }
     public int getPrice() { return price; }
-    public double getBasePrice() {
+    public int getBasePrice() {
         return basePrice;
     }
     public ItemCategory getCategory() { return category; }
     public void setPrice(int price) { this.price = price; }
     public String toString() { return name + " (" + price + " oro)"; }
-
 }

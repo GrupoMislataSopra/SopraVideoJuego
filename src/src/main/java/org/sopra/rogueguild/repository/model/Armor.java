@@ -4,7 +4,7 @@ public class Armor extends Item {
 
   private int shield;
 
-  public Armor(String name, int price, int shield,double basePrice) {
+  public Armor(String name, int price, int shield) {
     super(name, price, ItemCategory.ARMOR);
     this.shield = shield;
   }

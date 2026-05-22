@@ -125,19 +125,21 @@ public class ShopController {
     }
 
     private void sellProcess(int id) {
-        Item item = player.getInventory().get(id-1);
-        double amoutnGold =  Math.round(item.getBasePrice() * 0.8/5)*5;
         if(player.getInventory().isEmpty()){
             return;
         }
+
         if (id < 1 || id > player.getInventory().size()) {
             view.showMessage("Opción no válida.");
             return;
         }
-        player.sell(item,amoutnGold);
+
+        Item item = player.getInventory().get(id-1);
+        int amountGold = (int) (Math.round(item.getBasePrice() * 0.8 / 5) * 5);
+
+        player.sell(item, amountGold);
         repository.addItem(id,item);
 
-        System.out.println("Has vendido este Item "+item.getName()+" ,por este precio "+amoutnGold+" monedas!");
-
+        view.showMessage("Has vendido " + item.getName() + " por " + amountGold + " monedas.");
     }
 }
