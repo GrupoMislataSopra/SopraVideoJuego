@@ -33,4 +33,12 @@ public class Player {
         this.gold += amount;
         this.removeItem(item);
     }
+    public int addGold(int amount) {
+        int space = 500 - this.gold;
+        int actualAmount = Math.min(amount, space);
+        this.gold += actualAmount;
+        return actualAmount;
+    }
+
+
 }
