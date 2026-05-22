@@ -34,8 +34,8 @@ public class ItemGenerator {
     private final List<String> usedNames = new ArrayList<>();
 
 
-    public Item generateItem() {
-        ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+    public Item generateItem(ItemCategory category) {
+         category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
         String name = generateName(category);
 
         while (usedNames.contains(name)) {
@@ -44,7 +44,9 @@ public class ItemGenerator {
         }
         usedNames.add(name);
 
-        int price = generatePriceItem(category);
+
+        int price=10;
+        price = (int) Math.round(price / 5.0) * 5;
 
         return new GeneratedItem(name, price, category);
     }
@@ -81,27 +83,6 @@ public class ItemGenerator {
 
     }
 
-    public Item generateItem(ItemCategory category) {
-        String name = generateName(category);
-        while (usedNames.contains(name)) {
-            name = generateName(category);
-        }
-        usedNames.add(name);
-        int price = generatePriceItem(category);
-        return new GeneratedItem(name, price, category);
-    }
-
-    public Item generateItem(int maxPrice) {
-        ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
-        String name = generateName(category);
-        while (usedNames.contains(name)) {
-            name = generateName(category);
-        }
-        usedNames.add(name);
-        int price = Math.min(generatePriceItem(category), maxPrice);
-        price = (int) Math.round(price / 5.0) * 5;
-        return new GeneratedItem(name, price, category);
-    }
 }
 
 

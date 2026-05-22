@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class IncursionGenerator {
+
     private static final Random random = new Random();
     private final ItemGenerator itemGenerator;
 
@@ -30,8 +31,10 @@ public class IncursionGenerator {
     }
 
     public Incursion generateLoot() {
+        List<ItemCategory> lowValue = List.of(ItemCategory.POTION);
+        ItemCategory category = lowValue.get(random.nextInt(2));
+        Item item = random.nextBoolean() ? itemGenerator.generateItem(category) : null;
         int gold = (random.nextInt(41) + 20) * 5;
-        Item item = random.nextBoolean() ? itemGenerator.generateItem(50) : null;
         return new Incursion(
                 gold,
                 item,
@@ -41,7 +44,8 @@ public class IncursionGenerator {
     }
 
     public Incursion generateMinor() {
-        Item item = itemGenerator.generateItem(50);
+       ItemCategory itemCategory = ItemCategory.POTION;
+        Item item = itemGenerator.generateItem(itemCategory);
         int gold = random.nextInt(7) * 5;
         return new Incursion(
                 gold,
