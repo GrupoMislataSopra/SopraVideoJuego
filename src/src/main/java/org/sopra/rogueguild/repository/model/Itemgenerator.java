@@ -2,11 +2,9 @@ package org.sopra.rogueguild.repository.model;
 
 import java.util.*;
 
-public class Itemgenerator extends Item{
+public class Itemgenerator{
 
-    public Itemgenerator(String name, int price, ItemCategory category, double basePrice) {
-        super(name, price, category, basePrice);
-    }
+
 
         private static final Random random = new Random();
         public static final List<ItemCategory> CATEGORIES = List.of(
@@ -39,13 +37,15 @@ public class Itemgenerator extends Item{
 
             while (usedNames.contains(name)){
                 category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+                name = generateName(category);
             }
             usedNames.add(name);
 
             int price = generatePriceItem(category);
 
-            int basePrice = price;
-            return new Itemgenerator(name,price,category,basePrice);
+
+            return new Item(name, price, category) {
+            };
         }
 
         private String generateName(ItemCategory category){
@@ -54,32 +54,27 @@ public class Itemgenerator extends Item{
             int randomPrefix = random.nextInt(prefixList.size());
             int randomSufix = random.nextInt(sufixes.size());
 
-            return randomPrefix+" "+randomSufix;
+            return prefixList.get(randomPrefix)+" "+sufixes.get(randomSufix);
 
         }
 
 
         public int generatePriceItem(ItemCategory category){
-            int price;
-            switch (category ){
-                case ARMOR:
-                    return random.nextInt(151)+50;
 
-                case BOOTS:
-                    return random.nextInt(81)+20;
+            int price = switch (category ){
+                case ARMOR-> random.nextInt(151)+50;
 
-                case HELMET:
-                    return random.nextInt(131)+20;
+                case BOOTS -> random.nextInt(81)+20;
 
-                case WEAPON:
-                    return  random.nextInt(201)+100;
+                case HELMET -> random.nextInt(131)+20;
 
-                case POTION:
-                    return random.nextInt(31)+10;
+                case WEAPON-> random.nextInt(201)+100;
 
-                default:
-                    price = 10;
-            }
+                case POTION-> random.nextInt(31)+10;
+
+                default -> 10;
+
+            };
             return price - price % 5;
 
         }
