@@ -8,6 +8,7 @@ public final class Ansi {
     public static final String RED   = "\u001B[31m";
     public static final String PURP  = "\u001B[35m";
     public static final String YELO  = "\u001B[33m";
+    public static final String LGRAY = "\u001B[37m";
 
     public static String c(String color, String text) {
         if (!enabled) return text;
