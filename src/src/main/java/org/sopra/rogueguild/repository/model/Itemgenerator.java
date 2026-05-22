@@ -2,11 +2,9 @@ package org.sopra.rogueguild.repository.model;
 
 import java.util.*;
 
-public class Itemgenerator extends Item{
+public class Itemgenerator{
 
-    public Itemgenerator(String name, int price, ItemCategory category) {
-        super(name, price, category);
-    }
+
 
         private static final Random random = new Random();
         public static final List<ItemCategory> CATEGORIES = List.of(
@@ -39,13 +37,15 @@ public class Itemgenerator extends Item{
 
             while (usedNames.contains(name)){
                 category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+                name = generateName(category);
             }
             usedNames.add(name);
 
             int price = generatePriceItem(category);
 
 
-            return new Itemgenerator(name,price,category);
+            return new Item(name, price, category) {
+            };
         }
 
         private String generateName(ItemCategory category){
@@ -60,26 +60,21 @@ public class Itemgenerator extends Item{
 
 
         public int generatePriceItem(ItemCategory category){
-            int price;
-            switch (category ){
-                case ARMOR:
-                    return random.nextInt(151)+50;
 
-                case BOOTS:
-                    return random.nextInt(81)+20;
+            int price = switch (category ){
+                case ARMOR-> random.nextInt(151)+50;
 
-                case HELMET:
-                    return random.nextInt(131)+20;
+                case BOOTS -> random.nextInt(81)+20;
 
-                case WEAPON:
-                    return  random.nextInt(201)+100;
+                case HELMET -> random.nextInt(131)+20;
 
-                case POTION:
-                    return random.nextInt(31)+10;
+                case WEAPON-> random.nextInt(201)+100;
 
-                default:
-                    price = 10;
-            }
+                case POTION-> random.nextInt(31)+10;
+
+                default -> 10;
+
+            };
             return price - price % 5;
 
         }
