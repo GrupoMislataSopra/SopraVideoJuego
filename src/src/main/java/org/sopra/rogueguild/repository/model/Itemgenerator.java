@@ -44,7 +44,7 @@ public class Itemgenerator extends Item{
 
             int price = generatePriceItem(category);
 
-            double basePrice = price;
+            int basePrice = price;
             return new Itemgenerator(name,price,category,basePrice);
         }
 
