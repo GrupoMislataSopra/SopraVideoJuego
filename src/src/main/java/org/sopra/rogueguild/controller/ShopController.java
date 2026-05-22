@@ -3,8 +3,10 @@ package org.sopra.rogueguild.controller;
 import java.util.Scanner;
 
 import org.sopra.rogueguild.repository.ShopRepository;
+import org.sopra.rogueguild.repository.WorldEventGenerator;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.Player;
+import org.sopra.rogueguild.repository.model.WorldEvent;
 import org.sopra.rogueguild.view.ViewDisplay;
 import org.sopra.rogueguild.controller.dto.BuyResponse;
 
@@ -23,6 +25,11 @@ public class ShopController {
 
     public void start() {
         int opt;
+        WorldEvent event = WorldEventGenerator.generate();
+        repository.applyWorldEvent(event);
+        view.showMessage(event.getDescription());
+        view.pressKeyMessage();
+        sc.nextLine();
         do {
             view.landingPage();
             view.playerStatus(player);

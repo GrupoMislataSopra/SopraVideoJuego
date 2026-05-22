@@ -1,6 +1,6 @@
 package org.sopra.rogueguild.repository.model;
 
-public abstract class Item { ;
+public abstract class Item {
     private String name;
     private int price;
     private ItemCategory category;
