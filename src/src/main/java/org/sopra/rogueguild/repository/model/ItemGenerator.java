@@ -2,7 +2,7 @@ package org.sopra.rogueguild.repository.model;
 
 import java.util.*;
 
-public class Itemgenerator{
+public class ItemGenerator {
 
 
 
@@ -14,7 +14,7 @@ public class Itemgenerator{
                 ItemCategory.HELMET,
                 ItemCategory.POTION
         );
-        private Map<ItemCategory, List<String>>prefixes = Map.of(
+        private final Map<ItemCategory, List<String>>prefixes = Map.of(
                 ItemCategory.WEAPON,List.of("Espada","Hacha","Daga","Lanza","mandoble","Arco","Maza","Bastón"),
                 ItemCategory.ARMOR,List.of("Armadura","Cota","Peto","Coraza","Malla"),
                 ItemCategory.BOOTS,List.of("Botas","Grebas","Sandalias","Escarpines"),
@@ -31,7 +31,9 @@ public class Itemgenerator{
 
         private final List<String> usedNames = new ArrayList<>();
 
-        public Item generateItem(){
+
+
+    public Item generateItem(){
             ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
             String name = generateName(category);
 
@@ -44,9 +46,8 @@ public class Itemgenerator{
             int price = generatePriceItem(category);
 
 
-            return new Item(name, price, category) {
-            };
-        }
+        return new Generateditem(name,price,category);
+    }
 
         private String generateName(ItemCategory category){
             List<String>prefixList = prefixes.get(category);
