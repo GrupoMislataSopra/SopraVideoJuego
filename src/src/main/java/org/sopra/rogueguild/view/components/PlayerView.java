@@ -19,7 +19,7 @@ public class PlayerView {
         out.println("    +--+------------------------------------------------+");
         out.println("       | ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░");
         out.println("       | ░    NOMBRE:        " + player.getName());
-        out.println("       | ░    ORO:           " + player.getGold() + " monedas");
+        out.println("       | ░    ORO:           " + c(YELO,player.getGold() + " monedas"));
         if (player.getInventory().isEmpty()) {
             out.println("       | ░    INVENTARIO:    Vacío");
         } else {

@@ -4,6 +4,9 @@ import java.io.PrintStream;
 
 import org.sopra.rogueguild.view.utils.FramePrinter;
 
+import static org.sopra.rogueguild.view.utils.Ansi.GRAY;
+import static org.sopra.rogueguild.view.utils.Ansi.c;
+
 public class MessageView {
     private final FramePrinter frame;
 
@@ -16,7 +19,7 @@ public class MessageView {
     }
 
     public void pressKeyMessage() {
-        showMessage("Pulsa ENTER para continuar");
+        showPrompt(c(GRAY, "\n[ Pulsa ENTER para continuar... ]"));
     }
 
     public void quitMessage() {
