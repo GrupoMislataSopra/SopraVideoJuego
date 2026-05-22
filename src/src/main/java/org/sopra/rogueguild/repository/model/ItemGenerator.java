@@ -46,7 +46,7 @@ public class ItemGenerator {
 
         int price = generatePriceItem(category);
 
-        return new Generateditem(name, price, category);
+        return new GeneratedItem(name, price, category);
     }
 
 
@@ -79,6 +79,28 @@ public class ItemGenerator {
         };
         return price - price % 5;
 
+    }
+
+    public Item generateItem(ItemCategory category) {
+        String name = generateName(category);
+        while (usedNames.contains(name)) {
+            name = generateName(category);
+        }
+        usedNames.add(name);
+        int price = generatePriceItem(category);
+        return new GeneratedItem(name, price, category);
+    }
+
+    public Item generateItem(int maxPrice) {
+        ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+        String name = generateName(category);
+        while (usedNames.contains(name)) {
+            name = generateName(category);
+        }
+        usedNames.add(name);
+        int price = Math.min(generatePriceItem(category), maxPrice);
+        price = (int) Math.round(price / 5.0) * 5;
+        return new GeneratedItem(name, price, category);
     }
 }
 
