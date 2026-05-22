@@ -4,8 +4,8 @@ import java.util.*;
 
 public class Itemgenerator extends Item{
 
-    public Itemgenerator(String name, int price, ItemCategory category, double basePrice) {
-        super(name, price, category, basePrice);
+    public Itemgenerator(String name, int price, ItemCategory category) {
+        super(name, price, category);
     }
 
         private static final Random random = new Random();
@@ -44,8 +44,8 @@ public class Itemgenerator extends Item{
 
             int price = generatePriceItem(category);
 
-            int basePrice = price;
-            return new Itemgenerator(name,price,category,basePrice);
+
+            return new Itemgenerator(name,price,category);
         }
 
         private String generateName(ItemCategory category){
@@ -54,7 +54,7 @@ public class Itemgenerator extends Item{
             int randomPrefix = random.nextInt(prefixList.size());
             int randomSufix = random.nextInt(sufixes.size());
 
-            return randomPrefix+" "+randomSufix;
+            return prefixList.get(randomPrefix)+" "+sufixes.get(randomSufix);
 
         }
 
