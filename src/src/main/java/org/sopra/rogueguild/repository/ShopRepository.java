@@ -17,9 +17,9 @@ public class ShopRepository {
     }
 
     private void loadInitialStock() {
-        stock.put(1, new Weapon("Daga de las Sombras", 150, 10,10));
-        stock.put(2, new Weapon("Espada del Renegado", 350, 15,350));
-        stock.put(3, new Armor("Armadura del Sol Naciente", 200,20,200));
+        stock.put(1, new Weapon("Daga de las Sombras", 150, 10));
+        stock.put(2, new Weapon("Espada del Renegado", 350, 15));
+        stock.put(3, new Armor("Armadura del Sol Naciente", 200,20));
     }
 
     public Item getItem(int id) {
@@ -39,7 +39,7 @@ public class ShopRepository {
     public void applyWorldEvent(WorldEvent event) {
         for (Item item : stock.values()) {
             if (event.getAffectedCategory() == null || item.getCategory() == event.getAffectedCategory()) {
-                int newPrice = (int) Math.round(item.getBasePrice() * event.getMultiplier() / 5) * 5;
+                int newPrice = Math.round(item.getBasePrice() * event.getMultiplier() / 5) * 5;
                 item.setPrice(newPrice);
             }
         }

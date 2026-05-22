@@ -7,13 +7,19 @@ public class Player {
     private String name;
     private int gold;
     private List<Item> inventory = new ArrayList<>();
+
     public Player(String name, int gold) {
         this.name = name;
         this.gold = gold;
     }
+
     public String getName() { return name; }
     public int getGold() { return gold; }
-    public void buy(Item item) { this.gold -= item.getPrice(); this.addItem(item); }
+
+    public void buy(Item item) {
+        this.gold -= item.getPrice();
+        this.addItem(item);
+    }
     public void addItem(Item item) {
         inventory.add(item);
     }
@@ -23,8 +29,8 @@ public class Player {
     public List<Item> getInventory() {
         return new ArrayList<>(inventory);
     }
-    public void sell(Item item, double amount) {
-        this.gold += (int) amount;
+    public void sell(Item item, int amount) {
+        this.gold += amount;
         this.removeItem(item);
     }
 }
