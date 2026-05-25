@@ -1,12 +1,13 @@
-package org.sopra.rogueguild.repository.model;
+package org.sopra.rogueguild.repository;
+
+import org.sopra.rogueguild.repository.model.GeneratedItem;
+import org.sopra.rogueguild.repository.model.Item;
+import org.sopra.rogueguild.repository.model.ItemCategory;
 
 import java.util.*;
 
 
 public class ItemGenerator {
-
-
-
 
     private static final Random random = new Random();
     public static final List<ItemCategory> CATEGORIES = List.of(
