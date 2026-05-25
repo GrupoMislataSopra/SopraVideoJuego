@@ -16,6 +16,7 @@ public class ShopController {
     private final ViewDisplay view;
     private final ShopRepository repository;
     private final QuestRepository questRepository;
+    private final IncursionGenerator incursionGenerator;
     private final Scanner sc;
 
     public ShopController(Player p, ViewDisplay v, ShopRepository r, QuestRepository q) {
@@ -23,6 +24,7 @@ public class ShopController {
         this.view = v;
         this.repository = r;
         this.questRepository = q;
+        this.incursionGenerator = new IncursionGenerator(new ItemGenerator());
         this.sc = new Scanner(System.in);
     }
 
@@ -89,7 +91,7 @@ public class ShopController {
                     sellProcess(sellItem);
                     break;
                 case 6:
-                    incursionInCuse();
+                    incursionProcess();
                     break;
 
 
@@ -149,9 +151,7 @@ public class ShopController {
         view.showMessage("Has vendido " + item.getName() + " por " + amountGold + " monedas.");
     }
 
-    private void incursionInCuse(){
-        IncursionGenerator incursionGenerator = new IncursionGenerator(new ItemGenerator());
-
+    private void incursionProcess(){
         view.displayIncursion();
 
         int option;
@@ -191,5 +191,6 @@ public class ShopController {
         if(gold<incursion.getGoldReward()){
             view.showMessage("Limite excedido. Oro perdido");
         }
+        repository.refreshStock();
     }
 }
