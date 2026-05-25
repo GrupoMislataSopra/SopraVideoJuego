@@ -33,20 +33,21 @@ public class ItemGenerator {
 
     private final List<String> usedNames = new ArrayList<>();
 
+public Item generateItemForShop(){
+    ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+    return generateItemForIncursion(category);
 
-    public Item generateItem(ItemCategory category) {
-         category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+}
+    public Item generateItemForIncursion(ItemCategory category) {
         String name = generateName(category);
 
         while (usedNames.contains(name)) {
-            category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
             name = generateName(category);
         }
         usedNames.add(name);
 
 
-        int price=10;
-        price = (int) Math.round(price / 5.0) * 5;
+        int price = generatePriceItem(category);
 
         return new GeneratedItem(name, price, category);
     }
