@@ -6,9 +6,11 @@ import java.util.Map;
 import org.sopra.rogueguild.repository.model.*;
 
 public class ShopRepository {
-    private final Map<Integer, Item> stock;
+    private Map<Integer, Item> stock;
+    private ItemGenerator item;
     private final ItemGenerator itemGenerator;
     private static final int INITIAL_STOCK_SIZE = 4;
+
     public ShopRepository() {
         stock = new LinkedHashMap<>();
         itemGenerator= new ItemGenerator();
@@ -16,7 +18,6 @@ public class ShopRepository {
     }
 
     private void loadStock() {
-
         for (int i = 1; i <= INITIAL_STOCK_SIZE; i++) {
             stock.put(i, itemGenerator.generateItemForShop());
         }
@@ -26,8 +27,6 @@ public class ShopRepository {
         stock.clear();
         loadStock();
     }
-
-
 
     public Item getItem(int id) {
         return stock.get(id);
