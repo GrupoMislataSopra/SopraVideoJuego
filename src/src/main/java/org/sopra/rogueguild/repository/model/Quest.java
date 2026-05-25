@@ -1,15 +1,15 @@
 package org.sopra.rogueguild.repository.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Quest {
     private String description;
     private int goldReward;
-    private List<Item> requiredItems;
+    private Map<ItemCategory, Integer> requiredItems;
     private boolean isCompleted;
 
-    public Quest(String description, int goldReward, List<Item> requiredItems) {
+    public Quest(String description, int goldReward, Map<ItemCategory, Integer> requiredItems) {
         this.description = description;
         this.goldReward = (int) Math.round(goldReward / 5.0) * 5;
         this.requiredItems = requiredItems;
@@ -23,8 +23,8 @@ public class Quest {
         return goldReward;
     }
 
-    public List<Item> getRequiredItems() {
-        return new ArrayList<>(requiredItems);
+    public Map<ItemCategory, Integer> getRequiredItems() {
+        return new HashMap<>(requiredItems);
     }
 
     public boolean isCompleted() {
@@ -32,7 +32,15 @@ public class Quest {
     }
 
     public boolean checkRequirement(Player p) {
-        return p.getInventory().containsAll(requiredItems);
+        for (Map.Entry<ItemCategory, Integer> entry : requiredItems.entrySet()) {
+            ItemCategory category = entry.getKey();
+            int quantity = entry.getValue();
+            long count = p.getInventory().stream().filter(item -> item.getCategory() == category).count();
+            if (count < quantity) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean completeQuest(Player p) {

@@ -2,6 +2,7 @@ package org.sopra.rogueguild.controller;
 
 import java.util.Scanner;
 
+import org.sopra.rogueguild.repository.QuestRepository;
 import org.sopra.rogueguild.repository.IncursionGenerator;
 import org.sopra.rogueguild.repository.ItemGenerator;
 import org.sopra.rogueguild.repository.ShopRepository;
@@ -14,12 +15,14 @@ public class ShopController {
     private final Player player;
     private final ViewDisplay view;
     private final ShopRepository repository;
+    private final QuestRepository questRepository;
     private final Scanner sc;
 
-    public ShopController(Player p, ViewDisplay v, ShopRepository r) {
+    public ShopController(Player p, ViewDisplay v, ShopRepository r, QuestRepository q) {
         this.player = p;
         this.view = v;
         this.repository = r;
+        this.questRepository = q;
         this.sc = new Scanner(System.in);
     }
 
