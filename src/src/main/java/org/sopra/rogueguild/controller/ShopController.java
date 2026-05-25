@@ -1,5 +1,7 @@
 package org.sopra.rogueguild.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.sopra.rogueguild.repository.QuestRepository;
@@ -92,6 +94,10 @@ public class ShopController {
                     break;
                 case 6:
                     incursionProcess();
+                    break;
+
+                case 7:
+                    questProcess();
                     break;
 
 
@@ -192,5 +198,45 @@ public class ShopController {
             view.showMessage("Limite excedido. Oro perdido");
         }
         repository.refreshStock();
+    }
+    private void questProcess(){
+    if (questRepository.getPendingQuest().isEmpty()){
+        view.showMessage("No hay misiones");
+        return;
+    }
+        view.misionView(questRepository.getQuests());
+
+    int questId;
+
+        try {
+            questId = Integer.parseInt(sc.nextLine());
+        }catch (NumberFormatException n){
+            view.showMessage("Introduce un valor correcto");
+            return;
+        }
+
+        if (questId==0){
+            return;
+        }
+
+        Quest quest = questRepository.getIdQuest(questId);
+
+        if (quest == null){
+            view.showMessage("No hay misiones");
+            return;
+        }
+
+
+        if (quest.isCompleted()){
+            view.showMessage("Esta misión ya esta completada, elige otra");
+            return;
+        }
+
+        if (quest.completeQuest(player)){
+            view.showMessage("Misión completada");
+        }else {
+            view.showMessage("Tienes que cumplir los requisitos");
+        }
+
     }
 }
