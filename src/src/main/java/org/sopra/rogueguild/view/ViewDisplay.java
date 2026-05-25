@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 
+import org.sopra.rogueguild.repository.model.Incursion;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.controller.dto.BuyResponse;
@@ -16,6 +17,7 @@ public class ViewDisplay {
     private final StockView stockView;
     private final BuyResultView buyResultView;
     private final InventoryView inventoryView;
+    private final IncursionView incursionView;
 
     public ViewDisplay() {
         this(System.out, 59);
@@ -28,6 +30,7 @@ public class ViewDisplay {
         this.stockView = new StockView(out);
         this.buyResultView = new BuyResultView(messages);
         this.inventoryView = new InventoryView(out);
+        this.incursionView = new IncursionView(out);
     }
 
     public void landingPage() { banner.landingPage(); }
@@ -48,5 +51,14 @@ public class ViewDisplay {
 
     public void buyResult(BuyResponse r) {
         buyResultView.show(r);
+    }
+
+    public void displayIncursion(){
+        incursionView.displayIncursions();
+    }
+
+    public void incursionView(Incursion incursion, int amountGold){
+        incursionView.incursionResult(incursion,amountGold);
+
     }
 }

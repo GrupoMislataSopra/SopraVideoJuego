@@ -12,7 +12,7 @@ public class App {
         QuestRepository questRepository = new QuestRepository();
         ViewDisplay view = new ViewDisplay();
 
-        Player player = new Player( "Iñigo Montolla", 500);
+        Player player = new Player( "Iñigo Montolla", 250);
 
         ShopController controller = new ShopController(player, view, repository, questRepository);
         controller.start();

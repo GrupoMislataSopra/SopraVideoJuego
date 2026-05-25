@@ -3,11 +3,11 @@ package org.sopra.rogueguild.controller;
 import java.util.Scanner;
 
 import org.sopra.rogueguild.repository.QuestRepository;
+import org.sopra.rogueguild.repository.IncursionGenerator;
+import org.sopra.rogueguild.repository.ItemGenerator;
 import org.sopra.rogueguild.repository.ShopRepository;
 import org.sopra.rogueguild.repository.WorldEventGenerator;
-import org.sopra.rogueguild.repository.model.Item;
-import org.sopra.rogueguild.repository.model.Player;
-import org.sopra.rogueguild.repository.model.WorldEvent;
+import org.sopra.rogueguild.repository.model.*;
 import org.sopra.rogueguild.view.ViewDisplay;
 import org.sopra.rogueguild.controller.dto.BuyResponse;
 
@@ -88,6 +88,9 @@ public class ShopController {
                     }
                     sellProcess(sellItem);
                     break;
+                case 6:
+                    incursionInCuse();
+                    break;
 
 
                 case 0:
@@ -132,7 +135,7 @@ public class ShopController {
             return;
         }
 
-        if (id < 1 || id > player.getInventory().size()) {
+        if (id < 1) {
             view.showMessage("Opción no válida.");
             return;
         }
@@ -144,5 +147,49 @@ public class ShopController {
         repository.addItem(id,item);
 
         view.showMessage("Has vendido " + item.getName() + " por " + amountGold + " monedas.");
+    }
+
+    private void incursionInCuse(){
+        IncursionGenerator incursionGenerator = new IncursionGenerator(new ItemGenerator());
+
+        view.displayIncursion();
+
+        int option;
+        try {
+            option= Integer.parseInt(sc.nextLine());
+        }catch (NumberFormatException n){
+            view.showMessage("Introduce un numero valido");
+            return;
+        }
+
+        Incursion incursion;
+          switch (option){
+              case 1:
+                  incursion=incursionGenerator.generateConquest();
+                  break;
+
+              case 2:
+                  incursion=incursionGenerator.generateLoot();
+                  break;
+
+              case 3:
+                  incursion=incursionGenerator.generateMinor();
+                  break;
+              case 0:
+                  return;
+              default:
+                  view.showMessage("opcion no valida");
+                  return;
+        }
+        int gold = player.addGold(incursion.getGoldReward());
+        view.incursionView(incursion,gold);
+
+        if(incursion.getItemReward()!=null){
+            player.addItem(incursion.getItemReward());
+        }
+
+        if(gold<incursion.getGoldReward()){
+            view.showMessage("Limite excedido. Oro perdido");
+        }
     }
 }
