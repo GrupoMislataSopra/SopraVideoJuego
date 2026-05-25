@@ -8,7 +8,6 @@ import org.sopra.rogueguild.repository.model.*;
 public class ShopRepository {
     private Map<Integer, Item> stock;
     private ItemGenerator item;
-
     public ShopRepository() {
         stock = new LinkedHashMap<>();
         item= new ItemGenerator();
