@@ -8,20 +8,24 @@ import org.sopra.rogueguild.repository.model.*;
 public class ShopRepository {
     private Map<Integer, Item> stock;
     private ItemGenerator item;
+    private final ItemGenerator itemGenerator;
+    private static final int INITIAL_STOCK_SIZE = 4;
+
     public ShopRepository() {
         stock = new LinkedHashMap<>();
-        item= new ItemGenerator();
-        loadInitialStock();
+        itemGenerator= new ItemGenerator();
+        loadStock();
     }
 
-    private void loadInitialStock() {
-        stock.put(1,item.generateItem());
-        stock.put(2,item.generateItem());
-        stock.put(3,item.generateItem());
-        stock.put(4,item.generateItem());
-        stock.put(5,item.generateItem());
-        stock.put(6,item.generateItem());
-        stock.put(7,item.generateItem());
+    private void loadStock() {
+        for (int i = 1; i <= INITIAL_STOCK_SIZE; i++) {
+            stock.put(i, itemGenerator.generateItemForShop());
+        }
+    }
+
+    public void refreshStock() {
+        stock.clear();
+        loadStock();
     }
 
     public Item getItem(int id) {
