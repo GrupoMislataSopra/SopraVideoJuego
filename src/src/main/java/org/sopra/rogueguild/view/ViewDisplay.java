@@ -8,6 +8,7 @@ import org.sopra.rogueguild.repository.model.Incursion;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.controller.dto.BuyResponse;
+import org.sopra.rogueguild.repository.model.Quest;
 import org.sopra.rogueguild.view.components.*;
 
 public class ViewDisplay {
@@ -18,6 +19,7 @@ public class ViewDisplay {
     private final BuyResultView buyResultView;
     private final InventoryView inventoryView;
     private final IncursionView incursionView;
+    private final MisionesView misionesView;
 
     public ViewDisplay() {
         this(System.out, 59);
@@ -31,6 +33,7 @@ public class ViewDisplay {
         this.buyResultView = new BuyResultView(messages);
         this.inventoryView = new InventoryView(out);
         this.incursionView = new IncursionView(out);
+        this.misionesView = new MisionesView(out);
     }
 
     public void landingPage() { banner.landingPage(); }
@@ -60,5 +63,8 @@ public class ViewDisplay {
     public void incursionView(Incursion incursion, int amountGold){
         incursionView.incursionResult(incursion,amountGold);
 
+    }
+    public void misionView(List<Quest>quests){
+        misionesView.displayMisiones(quests);
     }
 }

@@ -1,8 +1,10 @@
 package org.sopra.rogueguild.view.components;
 
 import org.sopra.rogueguild.repository.model.Incursion;
+import org.sopra.rogueguild.repository.model.Quest;
 
 import java.io.PrintStream;
+import java.util.List;
 
 public class IncursionView {
     private final PrintStream out;

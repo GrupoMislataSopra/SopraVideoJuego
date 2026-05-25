@@ -28,6 +28,7 @@ public class BannerView {
         out.println("|| |  [4] Tirar un objeto                          | ||");
         out.println("|| |  [5] Vender un objeto                         | ||");
         out.println("|| |  [6] Realizar una incursión                   | ||");
+        out.println("|| |  [7] Misiones disponibles                     | ||");
         out.println("|| |" + c(Ansi.GRAY, "  [0] Salir                                    ") + "| ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");
