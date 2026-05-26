@@ -18,9 +18,14 @@ public class IncursionGenerator {
 
 
     public Incursion generateConquest() {
-        List<ItemCategory> highValue = List.of(ItemCategory.WEAPON, ItemCategory.ARMOR);
-        ItemCategory category = highValue.get(random.nextInt(2));
-        Item item = itemGenerator.generateItemForIncursion(category);
+        ItemCategory category;
+        if (random.nextInt(100) < 5) {
+            category = ItemCategory.OTHERS;
+        } else {
+            List<ItemCategory> highValue = List.of(ItemCategory.WEAPON, ItemCategory.ARMOR);
+            category = highValue.get(random.nextInt(2));
+        }
+        Item item = itemGenerator.generateItem(category);
         int gold = random.nextInt(4) * 5;
         return new Incursion(
                 gold,
@@ -31,9 +36,7 @@ public class IncursionGenerator {
     }
 
     public Incursion generateLoot() {
-        List<ItemCategory> lowValue = List.of(ItemCategory.POTION);
-        ItemCategory category = lowValue.get(random.nextInt(1));
-        Item item = random.nextBoolean() ? itemGenerator.generateItemForIncursion(category) : null;
+        Item item = random.nextBoolean() ? itemGenerator.generateItem(50) : null;
         int gold = (random.nextInt(41) + 20) * 5;
         return new Incursion(
                 gold,
@@ -44,8 +47,7 @@ public class IncursionGenerator {
     }
 
     public Incursion generateMinor() {
-       ItemCategory itemCategory = ItemCategory.POTION;
-        Item item = itemGenerator.generateItemForIncursion(itemCategory);
+        Item item = itemGenerator.generateItem(50);
         int gold = random.nextInt(7) * 5;
         return new Incursion(
                 gold,

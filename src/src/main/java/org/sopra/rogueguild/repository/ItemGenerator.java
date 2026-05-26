@@ -6,9 +6,7 @@ import org.sopra.rogueguild.repository.model.ItemCategory;
 
 import java.util.*;
 
-
 public class ItemGenerator {
-
     private static final Random random = new Random();
     public static final List<ItemCategory> CATEGORIES = List.of(
             ItemCategory.WEAPON,
@@ -18,11 +16,12 @@ public class ItemGenerator {
             ItemCategory.POTION
     );
     private final Map<ItemCategory, List<String>> prefixes = Map.of(
-            ItemCategory.WEAPON, List.of("Espada", "Hacha", "Daga", "Lanza", "mandoble", "Arco", "Maza", "Bastón"),
+            ItemCategory.WEAPON, List.of("Espada", "Hacha", "Daga", "Lanza", "Mandoble", "Arco", "Maza", "Bastón"),
             ItemCategory.ARMOR, List.of("Armadura", "Cota", "Peto", "Coraza", "Malla"),
             ItemCategory.BOOTS, List.of("Botas", "Grebas", "Sandalias", "Escarpines"),
             ItemCategory.HELMET, List.of("Yelmo", "Casco", "Celada", "Capucha", "Visera"),
-            ItemCategory.POTION, List.of("Poción", "Elixir", "Brebaje", "Unguento", "Tintura")
+            ItemCategory.POTION, List.of("Poción", "Elixir", "Brebaje", "Ungüento", "Tintura"),
+            ItemCategory.OTHERS, List.of("Rubí", "Zafiro", "Esmeralda", "Diamante", "Ámbar", "Ópalo","Lingote de oro", "Platino", "Acero estelar")
     );
 
     private static final List<String> sufixes = List.of(
@@ -34,12 +33,17 @@ public class ItemGenerator {
 
     private final List<String> usedNames = new ArrayList<>();
 
-public Item generateItemForShop(){
-    ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
-    return generateItemForIncursion(category);
+    public Item generateItem(){
+        ItemCategory category;
+        if (random.nextInt(100) < 5) {
+            category = ItemCategory.OTHERS;
+        } else {
+            category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+        }
+        return generateItem(category);
+    }
 
-}
-    public Item generateItemForIncursion(ItemCategory category) {
+    public Item generateItem(ItemCategory category) {
         String name = generateName(category);
 
         while (usedNames.contains(name)) {
@@ -47,12 +51,21 @@ public Item generateItemForShop(){
         }
         usedNames.add(name);
 
-
         int price = generatePriceItem(category);
-
         return new GeneratedItem(name, price, category);
     }
 
+    public Item generateItem(int maxPrice) {
+        ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+        int price = Math.min(generatePriceItem(category), maxPrice);
+        price = (int) Math.round(price / 5.0) * 5;
+        String name = generateName(category);
+        while (usedNames.contains(name)) {
+            name = generateName(category);
+        }
+        usedNames.add(name);
+        return new GeneratedItem(name, price, category);
+    }
 
     private String generateName(ItemCategory category) {
         List<String> prefixList = prefixes.get(category);
@@ -61,31 +74,18 @@ public Item generateItemForShop(){
         int randomSufix = random.nextInt(sufixes.size());
 
         return prefixList.get(randomPrefix) + " " + sufixes.get(randomSufix);
-
     }
-
 
     public int generatePriceItem(ItemCategory category) {
-
         int price = switch (category) {
             case ARMOR -> random.nextInt(151) + 50;
-
             case BOOTS -> random.nextInt(81) + 20;
-
             case HELMET -> random.nextInt(131) + 20;
-
             case WEAPON -> random.nextInt(201) + 100;
-
             case POTION -> random.nextInt(31) + 10;
-
+            case OTHERS -> random.nextInt(51) + 250;
             default -> 10;
-
         };
-        return price - price % 5;
-
+        return (int) Math.round(price / 5.0) * 5;
     }
-
 }
-
-
-
