@@ -33,17 +33,17 @@ public class ItemGenerator {
 
     private final List<String> usedNames = new ArrayList<>();
 
-    public Item generateItemForShop(){
+    public Item generateItem(){
         ItemCategory category;
         if (random.nextInt(100) < 5) {
             category = ItemCategory.OTHERS;
         } else {
             category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
         }
-        return generateItemForIncursion(category);
+        return generateItem(category);
     }
 
-    public Item generateItemForIncursion(ItemCategory category) {
+    public Item generateItem(ItemCategory category) {
         String name = generateName(category);
 
         while (usedNames.contains(name)) {
@@ -52,6 +52,18 @@ public class ItemGenerator {
         usedNames.add(name);
 
         int price = generatePriceItem(category);
+        return new GeneratedItem(name, price, category);
+    }
+
+    public Item generateItem(int maxPrice) {
+        ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+        int price = Math.min(generatePriceItem(category), maxPrice);
+        price = (int) Math.round(price / 5.0) * 5;
+        String name = generateName(category);
+        while (usedNames.contains(name)) {
+            name = generateName(category);
+        }
+        usedNames.add(name);
         return new GeneratedItem(name, price, category);
     }
 
