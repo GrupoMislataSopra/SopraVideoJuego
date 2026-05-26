@@ -1,12 +1,13 @@
-package org.sopra.rogueguild.repository.model;
+package org.sopra.rogueguild.repository;
+
+import org.sopra.rogueguild.repository.model.GeneratedItem;
+import org.sopra.rogueguild.repository.model.Item;
+import org.sopra.rogueguild.repository.model.ItemCategory;
 
 import java.util.*;
 
 
 public class ItemGenerator {
-
-
-
 
     private static final Random random = new Random();
     public static final List<ItemCategory> CATEGORIES = List.of(
@@ -33,16 +34,19 @@ public class ItemGenerator {
 
     private final List<String> usedNames = new ArrayList<>();
 
+public Item generateItemForShop(){
+    ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+    return generateItemForIncursion(category);
 
-    public Item generateItem() {
-        ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
+}
+    public Item generateItemForIncursion(ItemCategory category) {
         String name = generateName(category);
 
         while (usedNames.contains(name)) {
-            category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
             name = generateName(category);
         }
         usedNames.add(name);
+
 
         int price = generatePriceItem(category);
 
@@ -81,27 +85,6 @@ public class ItemGenerator {
 
     }
 
-    public Item generateItem(ItemCategory category) {
-        String name = generateName(category);
-        while (usedNames.contains(name)) {
-            name = generateName(category);
-        }
-        usedNames.add(name);
-        int price = generatePriceItem(category);
-        return new GeneratedItem(name, price, category);
-    }
-
-    public Item generateItem(int maxPrice) {
-        ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
-        String name = generateName(category);
-        while (usedNames.contains(name)) {
-            name = generateName(category);
-        }
-        usedNames.add(name);
-        int price = Math.min(generatePriceItem(category), maxPrice);
-        price = (int) Math.round(price / 5.0) * 5;
-        return new GeneratedItem(name, price, category);
-    }
 }
 
 

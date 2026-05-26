@@ -2,6 +2,7 @@ package org.sopra.rogueguild.view.components;
 
 import java.io.PrintStream;
 
+import org.sopra.rogueguild.repository.model.WorldEvent;
 import org.sopra.rogueguild.view.utils.FramePrinter;
 
 import static org.sopra.rogueguild.view.utils.Ansi.LGRAY;
@@ -28,5 +29,13 @@ public class MessageView {
 
     public void showPrompt(String prompt) {
         System.out.print(prompt);
+    }
+
+    public void showWorldEvent(WorldEvent event) {
+        String arrow = event.getMultiplier() > 1 ? "▲" : "▼";
+        String line = "─".repeat(33);
+        frame.line("  ✦ " + line + " ✦");
+        frame.line("      " + arrow + "   " + event.getDescription());
+        frame.line("  ✦ " + line + " ✦");
     }
 }
