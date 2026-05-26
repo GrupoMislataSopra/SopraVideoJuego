@@ -19,7 +19,7 @@ public class ShopRepository {
 
     private void loadStock() {
         for (int i = 1; i <= INITIAL_STOCK_SIZE; i++) {
-            stock.put(i, itemGenerator.generateItemForShop());
+            stock.put(i, itemGenerator.generateItem());
         }
     }
 
