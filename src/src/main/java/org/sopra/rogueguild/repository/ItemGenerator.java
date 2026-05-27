@@ -58,7 +58,6 @@ public class ItemGenerator {
     public Item generateItem(int maxPrice) {
         ItemCategory category = CATEGORIES.get(random.nextInt(CATEGORIES.size()));
         int price = Math.min(generatePriceItem(category), maxPrice);
-        price = (int) Math.round(price / 5.0) * 5;
         String name = generateName(category);
         while (usedNames.contains(name)) {
             name = generateName(category);
@@ -84,7 +83,6 @@ public class ItemGenerator {
             case WEAPON -> random.nextInt(201) + 100;
             case POTION -> random.nextInt(31) + 10;
             case OTHERS -> random.nextInt(51) + 250;
-            default -> 10;
         };
         return (int) Math.round(price / 5.0) * 5;
     }
