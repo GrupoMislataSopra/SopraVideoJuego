@@ -1,9 +1,6 @@
 package org.sopra.rogueguild.repository.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Player {
     private String name;
@@ -60,5 +57,27 @@ public class Player {
         };
     }
 
+    public void equipItem(Item item) {
+        ItemCategory category = item.getCategory();
+        List<Item> slots = itemEquipped.get(category);
 
+        if (slots == null) return;
+
+        inventory.remove(item);
+
+        if (slots.size() < limitEquip(category)) {
+            slots.add(item);
+        } else {
+            replaceItem(item, slots, category);
+        }
+    }
+
+    public void unequipItem(Item item) {
+        List<Item> slots = itemEquipped.get(item.getCategory());
+
+        if (slots == null || !slots.contains(item)) return;
+
+        slots.remove(item);
+        inventory.add(item);
+    }
 }
