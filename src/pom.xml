@@ -13,11 +13,13 @@
         <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.10.0</version>
+            <version>5.10.2</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -27,11 +29,22 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+<<<<<<< HEAD
+
+=======
+>>>>>>> bd20574a7ce07d98cca7c06d4ddd016fe06a3bdc
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+<<<<<<< HEAD
+                <version>3.2.5</version>
+            </plugin>
+        </plugins>
+    </build>
+
+=======
                 <configuration>
                     <argLine>
                         --add-opens java.base/java.lang=ALL-UNNAMED
@@ -42,4 +55,5 @@
             </plugin>
         </plugins>
     </build>
+>>>>>>> bd20574a7ce07d98cca7c06d4ddd016fe06a3bdc
 </project>
