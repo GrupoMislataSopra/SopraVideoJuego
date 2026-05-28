@@ -48,15 +48,13 @@ public class Player {
         return new ArrayList<>(inventory);
     }
 
-    public void sellItemIfIsNotEquipped(Item item, int amount) {
-        if (item == null) return;
-        if (isEquipped(item)) {
-            System.out.println("No se puede vender un item equipado");
-            return;
-        }
-        if (!inventory.contains(item)) return;
+    public boolean sellItemIfIsNotEquipped(Item item, int amount) {
+        if (item == null) return false;
+        if (isEquipped(item)) return false;
+        if (!inventory.contains(item)) return false;
         this.gold += amount;
         this.removeItem(item);
+        return true;
     }
 
     public int addGold(int amount) {
@@ -74,12 +72,12 @@ public class Player {
         };
     }
 
-    public void equipItem(Item item) {
+    public boolean equipItem(Item item) {
         ItemCategory category = item.getCategory();
         List<Item> slots = itemEquipped.get(category);
 
-        if (slots == null) return;
-        if (!inventory.contains(item)) return;
+        if (slots == null) return false;
+        if (!inventory.contains(item)) return false;
 
         inventory.remove(item);
 
@@ -88,6 +86,7 @@ public class Player {
         } else {
             replaceItem(item, slots, category);
         }
+        return true;
     }
 
     public void unequipItem(Item item) {
@@ -122,5 +121,9 @@ public class Player {
         if (item == null) return false;
         List<Item> slots = itemEquipped.get(item.getCategory());
         return slots != null && slots.contains(item);
+    }
+
+    public Map<ItemCategory, List<Item>> getItemEquipped() {
+        return new HashMap<>(itemEquipped);
     }
 }
