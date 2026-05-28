@@ -8,11 +8,19 @@ public class Quest {
     private int goldReward;
     private Map<ItemCategory, Integer> requiredItems;
     private boolean isCompleted;
+    private int minDamage;
+    private int minShield;
 
     public Quest(String description, int goldReward, Map<ItemCategory, Integer> requiredItems) {
         this.description = description;
         this.goldReward = (int) Math.round(goldReward / 5.0) * 5;
         this.requiredItems = requiredItems;
+    }
+
+    public Quest(String description, int goldReward, Map<ItemCategory, Integer> requiredItems, int minDamage, int minShield) {
+        this(description, goldReward, requiredItems);
+        this.minDamage = minDamage;
+        this.minShield = minShield;
     }
 
     public String getDescription() {

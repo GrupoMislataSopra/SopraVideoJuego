@@ -14,15 +14,25 @@ public class Player {
 
     ));
 
+    private int totalDamage;
+    private int totalShield;
+
     public Player(String name, int gold) {
         this.name = name;
         this.gold = gold;
 
     }
 
-
     public String getName() { return name; }
     public int getGold() { return gold; }
+
+    public int getTotalDamage() {
+        return itemEquipped.get(ItemCategory.WEAPON).stream().mapToInt(i -> ((Weapon) i).getDamage()).sum();
+    }
+
+    public int getTotalShield() {
+        return itemEquipped.get(ItemCategory.ARMOR).stream().mapToInt(i -> ((Armor) i).getShield()).sum();
+    }
 
     public void buy(Item item) {
         this.gold -= item.getPrice();
