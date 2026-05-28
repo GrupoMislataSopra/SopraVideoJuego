@@ -7,6 +7,7 @@ import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.repository.model.PlayerRol;
 import org.sopra.rogueguild.view.ViewDisplay;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
@@ -16,33 +17,35 @@ public class App {
         QuestRepository questRepository = new QuestRepository();
         ViewDisplay view = new ViewDisplay();
 
-        System.out.println("Escribe tu nombre  del perspnaje:");
-        String name= sc.nextLine().trim();
-        System.out.println("Elige tu rol de personaje:");
-        System.out.println("1.Warrior");
-        System.out.println("2.Mage");
-        System.out.println("3.Rogue");
-        System.out.println("4.Archer");
-        int option= sc.nextInt();
+        System.out.print("Escribe el nombre de tu personaje: ");
+        String name = sc.nextLine().trim();
+
+        System.out.println("\nElige tu rol de personaje:");
+        System.out.println("1. Guerrero");
+        System.out.println("2. Hechicero");
+        System.out.println("3. Pícaro");
+        System.out.println("4. Arquero");
+        System.out.print("\nElección: ");
+
         PlayerRol playerRol = null;
-        switch (option){
-            case 1:
-                playerRol=PlayerRol.WARRIOR;
-                break;
-            case 2:
-                playerRol=PlayerRol.MAGE;
-                break;
-            case 3:
-                playerRol=PlayerRol.ROGUE;
-                break;
-            case 4:
-                playerRol=PlayerRol.ARCHER;
-                break;
+        while (playerRol == null) {
+            try {
+                int option = Integer.parseInt(sc.nextLine());
+                switch (option) {
+                    case 1 -> playerRol = PlayerRol.GUERRERO;
+                    case 2 -> playerRol = PlayerRol.HECHICERO;
+                    case 3 -> playerRol = PlayerRol.PICARO;
+                    case 4 -> playerRol = PlayerRol.ARQUERO;
+                    default -> System.out.println("Opción no válida, elige entre 1 y 4:");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Introduce un número válido:");
+            }
         }
 
+        System.out.println("\n¡Saludos, " + playerRol.getName().toLowerCase() + "/a " + name + "!\n");
 
-        Player player = new Player( name, 250,playerRol);
-
+        Player player = new Player(name, 250, playerRol);
         ShopController controller = new ShopController(player, view, repository, questRepository);
         controller.start();
     }
