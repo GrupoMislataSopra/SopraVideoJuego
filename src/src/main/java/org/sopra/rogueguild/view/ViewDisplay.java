@@ -22,6 +22,8 @@ public class ViewDisplay {
     private final IncursionView incursionView;
     private final MisionesView misionesView;
     private final EquipView equipView;
+    public void shopMenu() { banner.shopMenu(); }
+    public void inventoryMenu() { banner.inventoryMenu(); }
 
     public ViewDisplay() {
         this(System.out, 59);

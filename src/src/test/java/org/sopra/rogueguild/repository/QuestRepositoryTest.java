@@ -17,7 +17,7 @@ class QuestRepositoryTest {
 
             List<Quest> quests = repository.getQuests();
 
-            assertEquals(2, quests.size());
+            assertEquals(4, quests.size());
         }
 
         @Test
@@ -27,7 +27,7 @@ class QuestRepositoryTest {
             List<Quest> quests = repository.getQuests();
             quests.clear();
 
-            assertEquals(2, repository.getQuests().size());
+            assertEquals(4, repository.getQuests().size());
         }
     }
 
@@ -39,26 +39,26 @@ class QuestRepositoryTest {
 
             List<Quest> pending = repository.getPendingQuest();
 
-            assertEquals(2, pending.size());
+            assertEquals(4, pending.size());
         }
 
         @Test
         void whenOneQuestIsCompleted_shouldReturnOnlyPendingOnes() {
             QuestRepository repository = new QuestRepository();
-            Player player = new Player("Test", 0);
+            Player player = new Player("Test", 0, PlayerRol.GUERRERO);
             player.addItem(new Weapon("Espada", 100, 20));
             player.addItem(new Weapon("Hacha", 100, 30));
             repository.getIdQuest(1).completeQuest(player);
 
             List<Quest> pending = repository.getPendingQuest();
 
-            assertEquals(1, pending.size());
+            assertEquals(3, pending.size());
         }
 
         @Test
         void whenAllQuestsAreCompleted_shouldReturnEmptyList() {
             QuestRepository repository = new QuestRepository();
-            Player player = new Player("Test", 0);
+            Player player = new Player("Test", 0, PlayerRol.GUERRERO);
             player.addItem(new Weapon("Espada", 100, 20));
             player.addItem(new Weapon("Hacha", 100, 30));
             player.addItem(new Armor("Peto", 100, 10));
@@ -66,6 +66,8 @@ class QuestRepositoryTest {
             player.addItem(new GeneratedItem("Botas", 100, ItemCategory.BOOTS));
             repository.getIdQuest(1).completeQuest(player);
             repository.getIdQuest(2).completeQuest(player);
+            repository.getIdQuest(3).completeQuest(player);
+            repository.getIdQuest(4).completeQuest(player);
 
             List<Quest> pending = repository.getPendingQuest();
 
@@ -89,10 +91,10 @@ class QuestRepositoryTest {
         void whenIdIsLast_shouldReturnLastQuest() {
             QuestRepository repository = new QuestRepository();
 
-            Quest quest = repository.getIdQuest(2);
+            Quest quest = repository.getIdQuest(4);
 
             assertNotNull(quest);
-            assertEquals(repository.getQuests().get(1), quest);
+            assertEquals(repository.getQuests().get(3), quest);
         }
 
         @Test
@@ -117,7 +119,7 @@ class QuestRepositoryTest {
         void whenIdExceedsSize_shouldReturnNull() {
             QuestRepository repository = new QuestRepository();
 
-            Quest quest = repository.getIdQuest(3);
+            Quest quest = repository.getIdQuest(5);
 
             assertNull(quest);
         }

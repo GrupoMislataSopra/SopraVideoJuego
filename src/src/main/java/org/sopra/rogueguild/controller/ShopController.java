@@ -30,7 +30,6 @@ public class ShopController {
         this.incursionGenerator = new IncursionGenerator(new ItemGenerator());
         this.sc = new Scanner(System.in);
     }
-
     public void start() {
         int opt;
         WorldEvent event = WorldEventGenerator.generate();
@@ -51,71 +50,81 @@ public class ShopController {
                 continue;
             }
             switch (opt) {
-                case 1:
-                    view.displayStock(repository.getAllStock(), false);
-                    break;
-                case 2:
-                    view.displayStock(repository.getAllStock(), true);
-                    int itemId;
-                    try {
-                        itemId = Integer.parseInt(sc.nextLine());
-                    } catch (NumberFormatException e) {
-                        view.showMessage("Introduce un número válido.");
-                        break;
-                    }
-                    BuyResponse buyResponse = buyProcess(itemId);
-                    view.buyResult(buyResponse);
-                    break;
-                case 3:
-                    view.displayInventory(player.getInventory(), false);
-                    break;
-                case 4:
-                    view.displayInventory(player.getInventory(), true);
-                    int removeItemId;
-                    try {
-                        removeItemId = Integer.parseInt(sc.nextLine());
-                    } catch (NumberFormatException e) {
-                        view.showMessage("Introduce un número válido.");
-                        break;
-                    }
-                    removeProcess(removeItemId);
-                    break;
-                case 5:
-
-                    view.displayInventory(player.getInventory(),true);
-                    int sellItem;
-                    try {
-                        sellItem = Integer.parseInt(sc.nextLine());
-                    }
-                    catch (NumberFormatException n){
-                        view.showMessage("Introduce un numero valido");
-                        break;
-                    }
-                    sellProcess(sellItem);
-                    break;
-                case 6:
-                    incursionProcess();
-                    break;
-
-                case 7:
-                    questProcess();
-                    break;
-
-                case 8:
-                    equipProcess();
-                    break;
-
-                case 9:
-                    unequipProcess();
-                    break;
-
-                case 0:
-                    view.quitMessage();
-                    break;
+                case 1 -> shopProcess();
+                case 2 -> inventoryProcess();
+                case 3 -> incursionProcess();
+                case 4 -> questProcess();
+                case 0 -> view.quitMessage();
             }
             view.pressKeyMessage();
             sc.nextLine();
         } while (opt != 0);
+    }
+
+    private void shopProcess() {
+        view.displayStock(repository.getAllStock(), false);
+        view.shopMenu();
+
+        int opt;
+        try {
+            opt = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            view.showMessage("Introduce un número válido.");
+            return;
+        }
+
+        switch (opt) {
+            case 1 -> {
+                view.displayStock(repository.getAllStock(), true);
+                try {
+                    int itemId = Integer.parseInt(sc.nextLine());
+                    BuyResponse buyResponse = buyProcess(itemId);
+                    view.buyResult(buyResponse);
+                } catch (NumberFormatException e) {
+                    view.showMessage("Introduce un número válido.");
+                }
+            }
+            case 0 -> {}
+            default -> view.showMessage("Opción no válida.");
+        }
+    }
+
+    private void inventoryProcess() {
+        view.displayInventory(player.getInventory(), false);
+        view.inventoryMenu();
+
+        int opt;
+        try {
+            opt = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            view.showMessage("Introduce un número válido.");
+            return;
+        }
+
+        switch (opt) {
+            case 1 -> equipProcess();
+            case 2 -> unequipProcess();
+            case 3 -> {
+                view.displayInventory(player.getInventory(), true);
+                try {
+                    int sellItem = Integer.parseInt(sc.nextLine());
+                    sellProcess(sellItem);
+                } catch (NumberFormatException e) {
+                    view.showMessage("Introduce un número válido.");
+                }
+            }
+            case 4 -> {
+                view.displayInventory(player.getInventory(), true);
+                try {
+                    int removeItemId = Integer.parseInt(sc.nextLine());
+                    removeProcess(removeItemId);
+                } catch (NumberFormatException e) {
+                    view.showMessage("Introduce un número válido.");
+                }
+            }
+            case 0 -> {}
+            default -> view.showMessage("Opción no válida.");
+        }
     }
 
     private BuyResponse buyProcess(int id) {

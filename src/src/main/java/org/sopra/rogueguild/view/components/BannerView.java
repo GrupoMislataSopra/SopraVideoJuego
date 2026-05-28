@@ -11,7 +11,7 @@ public class BannerView {
 
     public BannerView(PrintStream out) { this.out = out; }
 
-    public void landingPage() {
+    public void landingPage()  {
         out.println("  ___________________________________________________");
         out.println(" /  _______________________________________________  \\");
         out.println("|| /                                               \\ ||");
@@ -22,16 +22,38 @@ public class BannerView {
         out.println("|| |  " + c(RED, "         |___/           ") + c(PURP, "|___/            ") + "   | ||");
         out.println("|| |                                               | ||");
         out.println("|| | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ||");
-        out.println("|| |  [1] Ver productos de la tienda               | ||");
-        out.println("|| |  [2] Comprar un producto                      | ||");
-        out.println("|| |  [3] Ver mi inventario                        | ||");
-        out.println("|| |  [4] Tirar un objeto                          | ||");
-        out.println("|| |  [5] Vender un objeto                         | ||");
-        out.println("|| |  [6] Realizar una incursión                   | ||");
-        out.println("|| |  [7] Misiones disponibles                     | ||");
-        out.println("|| |  [8] Equipar objeto                           | ||");
-        out.println("|| |  [9] Desequipar objeto                        | ||");
+        out.println("|| |  [1] Tienda                                   | ||");
+        out.println("|| |  [2] Inventario                               | ||");
+        out.println("|| |  [3] Incursiones                              | ||");
+        out.println("|| |  [4] Misiones                                 | ||");
         out.println("|| |" + c(Ansi.GRAY, "  [0] Salir                                    ") + "| ||");
+        out.println("|| \\_______________________________________________/ ||");
+        out.println(" \\___________________________________________________/");
+    }
+
+    public void shopMenu() {
+        out.println("  ___________________________________________________");
+        out.println(" /  _______________________________________________  \\");
+        out.println("|| /                                               \\ ||");
+        out.println("|| |              " + c(PURP, "TIENDA") + "                          | ||");
+        out.println("|| | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ||");
+        out.println("|| |  [1] Comprar                                  | ||");
+        out.println("|| |" + c(Ansi.GRAY, "  [0] Volver                                   ") + "| ||");
+        out.println("|| \\_______________________________________________/ ||");
+        out.println(" \\___________________________________________________/");
+    }
+
+    public void inventoryMenu() {
+        out.println("  ___________________________________________________");
+        out.println(" /  _______________________________________________  \\");
+        out.println("|| /                                               \\ ||");
+        out.println("|| |              " + c(PURP, "INVENTARIO") + "                      | ||");
+        out.println("|| | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ||");
+        out.println("|| |  [1] Equipar objeto                           | ||");
+        out.println("|| |  [2] Desequipar objeto                        | ||");
+        out.println("|| |  [3] Vender objeto                            | ||");
+        out.println("|| |  [4] Tirar objeto                             | ||");
+        out.println("|| |" + c(Ansi.GRAY, "  [0] Volver                                   ") + "| ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");
     }
