@@ -151,7 +151,7 @@ public class ShopController {
         Item item = player.getInventory().get(id-1);
         int amountGold = (int) (Math.round(item.getBasePrice() * 0.8 / 5) * 5);
 
-        player.sell(item, amountGold);
+        player.sellItemIfIsNotEquipped(item, amountGold);
         repository.addItem(id,item);
 
         view.showMessage("Has vendido " + item.getName() + " por " + amountGold + " monedas.");
