@@ -12,10 +12,14 @@ public class Player {
             ItemCategory.HELMET, new ArrayList<>(),
             ItemCategory.BOOTS, new ArrayList<>()
     ));
+    private PlayerRol playerRol;
 
-    public Player(String name, int gold) {
+
+
+    public Player(String name, int gold, PlayerRol playerRol) {
         this.name = name;
         this.gold = gold;
+        this.playerRol = playerRol;
     }
 
     public String getName() { return name; }
@@ -47,7 +51,9 @@ public class Player {
     public List<Item> getInventory() {
         return new ArrayList<>(inventory);
     }
-
+    public PlayerRol getPlayerRol() {
+        return playerRol;
+    }
     public boolean sellItemIfIsNotEquipped(Item item, int amount) {
         if (item == null) return false;
         if (isEquipped(item)) return false;
