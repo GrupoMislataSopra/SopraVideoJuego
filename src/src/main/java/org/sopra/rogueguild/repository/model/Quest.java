@@ -35,6 +35,14 @@ public class Quest {
         return new HashMap<>(requiredItems);
     }
 
+    public int getMinDamage() {
+        return minDamage;
+    }
+
+    public int getMinShield() {
+        return minShield;
+    }
+
     public boolean isCompleted() {
         return isCompleted;
     }
@@ -48,6 +56,8 @@ public class Quest {
                 return false;
             }
         }
+        if (p.getTotalDamage() < minDamage) return false;
+        if (p.getTotalShield() < minShield) return false;
         return true;
     }
 
