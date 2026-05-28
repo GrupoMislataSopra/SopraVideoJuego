@@ -10,7 +10,7 @@ class PlayerTest {
     class AddGold {
         @Test
         void whenGoldIsAdded_shouldIncreasePlayerGold() {
-            Player player = new Player("Test", 100);
+            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
 
             player.addGold(50);
 
@@ -19,7 +19,7 @@ class PlayerTest {
 
         @Test
         void whenGoldExceedsLimit_shouldReturn500() {
-            Player player = new Player("Test", 100);
+            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
 
             player.addGold(450);
 
@@ -28,7 +28,7 @@ class PlayerTest {
 
         @Test
         void whenGoldExceedsLimit_shouldReturnActualGoldAdded() {
-            Player player = new Player("Test", 400);
+            Player player = new Player("Test", 400, PlayerRol.GUERRERO);
 
             int result = player.addGold(200);
 
@@ -40,7 +40,7 @@ class PlayerTest {
     class Buy {
         @Test
         void whenPlayerBuysItem_shouldDecreaseGoldAndAddToInventory() {
-            Player player = new Player("Test", 200);
+            Player player = new Player("Test", 200, PlayerRol.GUERRERO);
             Weapon weapon = new Weapon("Espada", 100, 20);
 
             player.buy(weapon);
@@ -54,11 +54,11 @@ class PlayerTest {
     class Sell {
         @Test
         void whenPlayerSellsItem_shouldIncreaseGoldAndRemoveFromInventory() {
-            Player player = new Player("Test", 100);
+            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
             Weapon weapon = new Weapon("Espada", 100, 20);
             player.addItem(weapon);
 
-            player.sell(weapon, 80);
+            player.sellItemIfIsNotEquipped(weapon, 80);
 
             assertEquals(180, player.getGold());
             assertFalse(player.getInventory().contains(weapon));

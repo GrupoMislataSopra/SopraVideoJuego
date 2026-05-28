@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class QuestTest {
     @Nested
     class whenCreated {
@@ -29,7 +30,7 @@ class QuestTest {
         @Test
         void whenPlayerHasRequiredItems_shouldReturnTrue() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
-            Player player = new Player("Test", 100);
+            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
             Weapon weapon1 = new Weapon("Espada", 100, 20);
             Weapon weapon2 = new Weapon("Hacha", 150, 50);
 
@@ -42,7 +43,7 @@ class QuestTest {
         @Test
         void whenPlayerHasNotRequiredItems_shouldReturnFalse() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
-            Player player = new Player("Test", 100);
+            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
             Weapon weapon1 = new Weapon("Espada", 100, 20);
 
             player.addItem(weapon1);
@@ -56,7 +57,7 @@ class QuestTest {
         @Test
         void whenPlayerCompletesQuest_shouldAddGold() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
-            Player player = new Player("Test", 100);
+            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
             Weapon weapon1 = new Weapon("Espada", 100, 20);
             Weapon weapon2 = new Weapon("Hacha", 150, 50);
 
@@ -70,7 +71,7 @@ class QuestTest {
         @Test
         void whenQuestIsAlreadyCompleted_shouldNotBeAble() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
-            Player player = new Player("Test", 100);
+            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
             Weapon weapon1 = new Weapon("Espada", 100, 20);
             Weapon weapon2 = new Weapon("Hacha", 150, 50);
 
@@ -85,7 +86,7 @@ class QuestTest {
         @Test
         void whenPlayerHasNotRequiredItems_shouldNotAddGold() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
-            Player player = new Player("Test", 100);
+            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
             Weapon weapon1 = new Weapon("Espada", 100, 20);
 
             player.addItem(weapon1);
