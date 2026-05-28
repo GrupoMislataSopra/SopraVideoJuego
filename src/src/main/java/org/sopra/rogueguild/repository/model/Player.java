@@ -6,7 +6,7 @@ public class Player {
     private String name;
     private int gold;
     private List<Item> inventory = new ArrayList<>();
-    private static Map<ItemCategory, List<Item>>itemEquipped= new HashMap<>(Map.of(
+    private final Map<ItemCategory, List<Item>>itemEquipped= new HashMap<>(Map.of(
             ItemCategory.WEAPON, new ArrayList<>(),
             ItemCategory.ARMOR, new ArrayList<>(),
             ItemCategory.HELMET, new ArrayList<>(),
@@ -37,9 +37,17 @@ public class Player {
     public List<Item> getInventory() {
         return new ArrayList<>(inventory);
     }
-    public void sell(Item item, int amount) {
+    public void sellItemIfIsNotEquipped(Item item, int amount) {
+        if (item == null)return;
+        if(isEquipped(item)){
+            System.out.println("No se puede vender un item equipado");
+            return;
+        }
+
+        if (!inventory.contains(item)) return;
         this.gold += amount;
         this.removeItem(item);
+
     }
     public int addGold(int amount) {
         int space = 500 - this.gold;
@@ -62,6 +70,7 @@ public class Player {
         List<Item> slots = itemEquipped.get(category);
 
         if (slots == null) return;
+        if(!inventory.contains(item))return;
 
         inventory.remove(item);
 
@@ -70,7 +79,10 @@ public class Player {
         } else {
             replaceItem(item, slots, category);
         }
+
+
     }
+
 
     public void unequipItem(Item item) {
         List<Item> slots = itemEquipped.get(item.getCategory());
@@ -80,4 +92,35 @@ public class Player {
         slots.remove(item);
         inventory.add(item);
     }
+
+    private void replaceItem(Item newItem,List<Item> slots, ItemCategory category) {
+        Item removeItem;
+        if (category == ItemCategory.WEAPON){
+            removeItem = slots.getFirst();
+            for (Item equippedItem : slots){
+                Weapon currentItemWeapon = (Weapon) equippedItem;
+                Weapon weaponToRemove = (Weapon) removeItem;
+
+                if (currentItemWeapon.getDamage() < weaponToRemove.getDamage()){
+                    removeItem = equippedItem;
+                }
+            }
+        }else {
+            removeItem = slots.getFirst();
+        }
+
+        slots.remove(removeItem);
+        slots.add(newItem);
+        inventory.add(removeItem);
+    }
+
+    public boolean isEquipped(Item item){
+        if (item == null) return false;
+        List<Item>slots = itemEquipped.get(item.getCategory());
+
+
+        return slots != null && slots.contains(item);
+    }
+
+
 }
