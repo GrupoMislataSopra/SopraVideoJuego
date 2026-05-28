@@ -1,10 +1,10 @@
 package org.sopra.rogueguild.repository.model;
 
 public enum PlayerRol {
-    WARRIOR("WATRRIOR"),
-    MAGE("MAGE"),
-    ROGUE("ROGUE"),
-    ARCHER("ARCHER");
+    GUERRERO("Guerrero"),
+    HECHICERO("Hechicero"),
+    PICARO("Pícaro"),
+    ARQUERO("Arquero");
 
     private final String name;
 
@@ -15,7 +15,4 @@ public enum PlayerRol {
     public String getName() {
         return name;
     }
-
-
-
 }
