@@ -2,6 +2,7 @@ package org.sopra.rogueguild.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.sopra.rogueguild.repository.QuestRepository;
@@ -100,6 +101,13 @@ public class ShopController {
                     questProcess();
                     break;
 
+                case 8:
+                    equipProcess();
+                    break;
+
+                case 9:
+                    unequipProcess();
+                    break;
 
                 case 0:
                     view.quitMessage();
@@ -143,15 +151,19 @@ public class ShopController {
             return;
         }
 
-        if (id < 1) {
+        if (id < 1 || id > player.getInventory().size()) {
             view.showMessage("Opción no válida.");
             return;
         }
 
-        Item item = player.getInventory().get(id-1);
+        Item item = player.getInventory().get(id - 1);
         int amountGold = (int) (Math.round(item.getBasePrice() * 0.8 / 5) * 5);
 
-        player.sell(item, amountGold);
+        if (!player.sellItemIfIsNotEquipped(item, amountGold)) {
+            view.showMessage("No puedes vender un ítem equipado.");
+            return;
+        }
+
         repository.addItem(id,item);
 
         view.showMessage("Has vendido " + item.getName() + " por " + amountGold + " monedas.");
@@ -184,7 +196,7 @@ public class ShopController {
               case 0:
                   return;
               default:
-                  view.showMessage("opcion no valida");
+                  view.showMessage("Opción no válida");
                   return;
         }
         int gold = player.addGold(incursion.getGoldReward());
@@ -237,6 +249,68 @@ public class ShopController {
         }else {
             view.showMessage("Tienes que cumplir los requisitos");
         }
+    }
 
+    private void equipProcess() {
+        if (player.getInventory().isEmpty()) {
+            view.showMessage("Tu inventario está vacío.");
+            return;
+        }
+
+        view.displayEquipMenu(player.getInventory(), player.getItemEquipped());
+
+        int id;
+        try {
+            id = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            view.showMessage("Introduce un número válido.");
+            return;
+        }
+
+        if (id == 0) return;
+
+        if (id < 1 || id > player.getInventory().size()) {
+            view.showMessage("Opción no válida.");
+            return;
+        }
+
+        Item item = player.getInventory().get(id - 1);
+        if (player.equipItem(item)) {
+            view.showMessage("Has equipado " + item.getName());
+        } else {
+            view.showMessage("Este objeto no se puede equipar.");
+        }
+    }
+
+    private void unequipProcess() {
+        Map<ItemCategory, List<Item>> equipped = player.getItemEquipped();
+
+        List<Item> equippedList = equipped.values().stream().flatMap(List::stream).toList();
+
+        if (equippedList.isEmpty()) {
+            view.showMessage("No tienes ningún ítem equipado.");
+            return;
+        }
+
+        view.displayInventory(equippedList, true);
+
+        int id;
+        try {
+            id = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            view.showMessage("Introduce un número válido.");
+            return;
+        }
+
+        if (id == 0) return;
+
+        if (id < 1 || id > equippedList.size()) {
+            view.showMessage("Opción no válida.");
+            return;
+        }
+
+        Item item = equippedList.get(id - 1);
+        player.unequipItem(item);
+        view.showMessage("Has desequipado " + item.getName());
     }
 }

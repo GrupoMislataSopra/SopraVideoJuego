@@ -21,16 +21,39 @@
             <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.14.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+<<<<<<< HEAD
+
+=======
+>>>>>>> bd20574a7ce07d98cca7c06d4ddd016fe06a3bdc
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+<<<<<<< HEAD
                 <version>3.2.5</version>
             </plugin>
         </plugins>
     </build>
 
+=======
+                <configuration>
+                    <argLine>
+                        --add-opens java.base/java.lang=ALL-UNNAMED
+                        -javaagent:${settings.localRepository}/org/mockito/mockito-core/5.14.2/mockito-core-5.14.2.jar
+                        -Xshare:off
+                    </argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+>>>>>>> bd20574a7ce07d98cca7c06d4ddd016fe06a3bdc
 </project>
