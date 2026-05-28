@@ -10,6 +10,7 @@ import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.controller.dto.BuyResponse;
 import org.sopra.rogueguild.repository.model.Quest;
 import org.sopra.rogueguild.view.components.*;
+import org.sopra.rogueguild.repository.model.ItemCategory;
 
 public class ViewDisplay {
     private final BannerView banner;
@@ -20,6 +21,7 @@ public class ViewDisplay {
     private final InventoryView inventoryView;
     private final IncursionView incursionView;
     private final MisionesView misionesView;
+    private final EquipView equipView;
 
     public ViewDisplay() {
         this(System.out, 59);
@@ -34,6 +36,7 @@ public class ViewDisplay {
         this.inventoryView = new InventoryView(out);
         this.incursionView = new IncursionView(out);
         this.misionesView = new MisionesView(out);
+        this.equipView = new EquipView(out);
     }
 
     public void landingPage() { banner.landingPage(); }
@@ -66,5 +69,9 @@ public class ViewDisplay {
     }
     public void misionView(List<Quest>quests){
         misionesView.displayMisiones(quests);
+    }
+
+    public void displayEquipMenu(List<Item> inventory, Map<ItemCategory, List<Item>> equipped) {
+        equipView.displayEquipMenu(inventory, equipped);
     }
 }
