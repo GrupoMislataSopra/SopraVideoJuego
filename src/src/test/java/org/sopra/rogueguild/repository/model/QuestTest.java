@@ -2,6 +2,7 @@ package org.sopra.rogueguild.repository.model;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.sopra.rogueguild.repository.WorldMap;
 
 import java.util.Map;
 
@@ -30,7 +31,8 @@ class QuestTest {
         @Test
         void whenPlayerHasRequiredItems_shouldReturnTrue() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
-            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
+            WorldMap worldMap=new WorldMap();
+            Player player = new Player("Test", 0, PlayerRol.GUERRERO,worldMap.getStartingCity());
             Weapon weapon1 = new Weapon("Espada", 100, 20);
             Weapon weapon2 = new Weapon("Hacha", 150, 50);
 
@@ -43,7 +45,8 @@ class QuestTest {
         @Test
         void whenPlayerHasNotRequiredItems_shouldReturnFalse() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
-            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
+            WorldMap worldMap=new WorldMap();
+            Player player = new Player("Test", 0, PlayerRol.GUERRERO,worldMap.getStartingCity());
             Weapon weapon1 = new Weapon("Espada", 100, 20);
 
             player.addItem(weapon1);
@@ -57,7 +60,8 @@ class QuestTest {
         @Test
         void whenPlayerCompletesQuest_shouldAddGold() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
-            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
+            WorldMap worldMap=new WorldMap();
+            Player player = new Player("Test", 0, PlayerRol.GUERRERO,worldMap.getStartingCity());
             Weapon weapon1 = new Weapon("Espada", 100, 20);
             Weapon weapon2 = new Weapon("Hacha", 150, 50);
 
@@ -71,7 +75,8 @@ class QuestTest {
         @Test
         void whenQuestIsAlreadyCompleted_shouldNotBeAble() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
-            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
+            WorldMap worldMap=new WorldMap();
+            Player player = new Player("Test", 0, PlayerRol.GUERRERO,worldMap.getStartingCity());
             Weapon weapon1 = new Weapon("Espada", 100, 20);
             Weapon weapon2 = new Weapon("Hacha", 150, 50);
 
@@ -86,7 +91,8 @@ class QuestTest {
         @Test
         void whenPlayerHasNotRequiredItems_shouldNotAddGold() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
-            Player player = new Player("Test", 100, PlayerRol.GUERRERO);
+            WorldMap worldMap=new WorldMap();
+            Player player = new Player("Test", 0, PlayerRol.GUERRERO,worldMap.getStartingCity());
             Weapon weapon1 = new Weapon("Espada", 100, 20);
 
             player.addItem(weapon1);

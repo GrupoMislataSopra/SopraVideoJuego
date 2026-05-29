@@ -21,6 +21,7 @@ public class PlayerView {
         out.println("       | ░    NOMBRE:        " + player.getName());
         out.println("       | ░    ROL:           " + player.getPlayerRol());
         out.println("       | ░    ORO:           " + player.getGold() + " monedas");
+        out.println("       | ░    CIUDAD:        " + player.getCurrentCity());
         if (player.getInventory().isEmpty()) {
             out.println("       | ░    INVENTARIO:    Vacío");
         } else {
