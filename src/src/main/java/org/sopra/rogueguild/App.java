@@ -3,6 +3,8 @@ package org.sopra.rogueguild;
 import org.sopra.rogueguild.controller.ShopController;
 import org.sopra.rogueguild.repository.QuestRepository;
 import org.sopra.rogueguild.repository.ShopRepository;
+import org.sopra.rogueguild.repository.WorldMap;
+import org.sopra.rogueguild.repository.model.City;
 import org.sopra.rogueguild.repository.model.Player;
 import org.sopra.rogueguild.repository.model.PlayerRol;
 import org.sopra.rogueguild.view.ViewDisplay;
@@ -42,10 +44,11 @@ public class App {
                 System.out.println("Introduce un número válido:");
             }
         }
+        WorldMap map= new WorldMap();
 
         System.out.println("\n¡Saludos, " + playerRol.getName().toLowerCase() + "/a " + name + "!\n");
 
-        Player player = new Player(name, 250, playerRol);
+        Player player = new Player(name, 250, playerRol,map.getStartingCity());
         ShopController controller = new ShopController(player, view, repository, questRepository);
         controller.start();
     }
