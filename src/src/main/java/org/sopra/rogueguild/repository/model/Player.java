@@ -15,8 +15,6 @@ public class Player {
     private PlayerRol playerRol;
     private City currentCity;
 
-
-
     public Player(String name, int gold, PlayerRol playerRol, City currentCity) {
         this.name = name;
         this.gold = gold;
@@ -134,32 +132,36 @@ public class Player {
         List<Item> slots = itemEquipped.get(item.getCategory());
         return slots != null && slots.contains(item);
     }
-    private void travelTo(City destination){
-        if(destination==null||currentCity==null)return ;
 
-        List<City> route = findRoute(currentCity,destination);
+    public boolean travelTo(City destination){
+        if (destination == null || currentCity == null) return false;
+        if (destination == currentCity) return false;
 
-        if(route.isEmpty())return;
+        List<City> route = findRoute(currentCity, destination);
+
+        if (route.isEmpty()) return false;
 
         for (City city: route){
-
+            currentCity = city;
         }
-        currentCity = destination;
+        return true;
     }
-    private List findRoute(City start, City destination){
-        Queue<City>queue= new LinkedList<>();
-        Set<City>visited= new HashSet<>();
-        Map<City,City>previous = new HashMap<>();
+
+    private List<City> findRoute(City start, City destination){
+        Queue<City> queue= new LinkedList<>();
+        Set<City> visited= new HashSet<>();
+        Map<City,City> previous = new HashMap<>();
 
         queue.add(start);
         visited.add(start);
 
-        while (true) {
+        while (!queue.isEmpty()) {
             City current = queue.poll();
 
             if (current == destination) {
                 return buildRoute(previous, start, destination);
             }
+
             for (City connections : current.getConnections()) {
                 if (!visited.contains(connections)) {
                     visited.add(connections);
@@ -168,12 +170,22 @@ public class Player {
                 }
             }
         }
-        return Collections.EMPTY_LIST;
-
+        return Collections.emptyList();
     }
 
+    private List<City> buildRoute(Map<City, City> previous, City start, City destination) {
+        List<City> route = new ArrayList<>();
+        City current = destination;
 
+        while (current != start) {
+            route.add(current);
+            current = previous.get(current);
+        }
 
+        route.add(start);
+        Collections.reverse(route);
+        return route;
+    }
 
     public Map<ItemCategory, List<Item>> getItemEquipped() {
         return new HashMap<>(itemEquipped);
