@@ -5,11 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import org.sopra.rogueguild.repository.QuestRepository;
-import org.sopra.rogueguild.repository.IncursionGenerator;
-import org.sopra.rogueguild.repository.ItemGenerator;
-import org.sopra.rogueguild.repository.ShopRepository;
-import org.sopra.rogueguild.repository.WorldEventGenerator;
+import org.sopra.rogueguild.repository.*;
 import org.sopra.rogueguild.repository.model.*;
 import org.sopra.rogueguild.view.ViewDisplay;
 import org.sopra.rogueguild.controller.dto.BuyResponse;
@@ -20,13 +16,15 @@ public class ShopController {
     private final ShopRepository repository;
     private final QuestRepository questRepository;
     private final IncursionGenerator incursionGenerator;
+    private final WorldMap worldMap;
     private final Scanner sc;
 
-    public ShopController(Player p, ViewDisplay v, ShopRepository r, QuestRepository q) {
+    public ShopController(Player p, ViewDisplay v, ShopRepository r, QuestRepository q, WorldMap w) {
         this.player = p;
         this.view = v;
         this.repository = r;
         this.questRepository = q;
+        this.worldMap = w;
         this.incursionGenerator = new IncursionGenerator(new ItemGenerator());
         this.sc = new Scanner(System.in);
     }
@@ -122,6 +120,9 @@ public class ShopController {
                     view.showMessage("Introduce un número válido.");
                 }
             }
+
+            case 5 -> travelProcess();
+
             case 0 -> {}
             default -> view.showMessage("Opción no válida.");
         }
@@ -321,5 +322,34 @@ public class ShopController {
         Item item = equippedList.get(id - 1);
         player.unequipItem(item);
         view.showMessage("Has desequipado " + item.getName());
+    }
+
+    private void travelProcess() {
+        view.displayTravelMenu(player.getCurrentCity());
+
+        int id;
+        try {
+            id = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            view.showMessage("Introduce un número válido.");
+            return;
+        }
+
+        if (id == 0) return;
+
+        List<City> connections = player.getCurrentCity().getConnections();
+
+        if (id < 1 || id > connections.size()) {
+            view.showMessage("Opción no válida.");
+            return;
+        }
+
+        City destination = connections.get(id - 1);
+
+        if (player.travelTo(destination)) {
+            view.showMessage("Has viajado a " + destination.getName());
+        } else {
+            view.showMessage("No se puede viajar a esa ciudad.");
+        }
     }
 }

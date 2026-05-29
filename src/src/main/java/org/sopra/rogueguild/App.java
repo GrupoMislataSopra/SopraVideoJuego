@@ -18,6 +18,7 @@ public class App {
         ShopRepository repository = new ShopRepository();
         QuestRepository questRepository = new QuestRepository();
         ViewDisplay view = new ViewDisplay();
+        WorldMap worldMap = new WorldMap();
 
         System.out.print("Escribe el nombre de tu personaje: ");
         String name = sc.nextLine().trim();
@@ -44,12 +45,11 @@ public class App {
                 System.out.println("Introduce un número válido:");
             }
         }
-        WorldMap map= new WorldMap();
 
         System.out.println("\n¡Saludos, " + playerRol.getName().toLowerCase() + "/a " + name + "!\n");
 
-        Player player = new Player(name, 250, playerRol,map.getStartingCity());
-        ShopController controller = new ShopController(player, view, repository, questRepository);
+        Player player = new Player(name, 250, playerRol, worldMap.getStartingCity());
+        ShopController controller = new ShopController(player, view, repository, questRepository, worldMap);
         controller.start();
     }
 }

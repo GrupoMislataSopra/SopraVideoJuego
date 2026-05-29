@@ -26,6 +26,7 @@ public class BannerView {
         out.println("|| |  [2] Inventario                               | ||");
         out.println("|| |  [3] Incursiones                              | ||");
         out.println("|| |  [4] Misiones                                 | ||");
+        out.println("|| |  [5] Viajar                                   | ||");
         out.println("|| |" + c(Ansi.GRAY, "  [0] Salir                                    ") + "| ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");
