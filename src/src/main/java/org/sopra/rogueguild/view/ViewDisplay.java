@@ -4,13 +4,9 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 
-import org.sopra.rogueguild.repository.model.Incursion;
-import org.sopra.rogueguild.repository.model.Item;
-import org.sopra.rogueguild.repository.model.Player;
+import org.sopra.rogueguild.repository.model.*;
 import org.sopra.rogueguild.controller.dto.BuyResponse;
-import org.sopra.rogueguild.repository.model.Quest;
 import org.sopra.rogueguild.view.components.*;
-import org.sopra.rogueguild.repository.model.ItemCategory;
 
 public class ViewDisplay {
     private final BannerView banner;
@@ -22,6 +18,8 @@ public class ViewDisplay {
     private final IncursionView incursionView;
     private final MisionesView misionesView;
     private final EquipView equipView;
+    private final TravelView travelView;
+
     public void shopMenu() { banner.shopMenu(); }
     public void inventoryMenu() { banner.inventoryMenu(); }
 
@@ -39,6 +37,7 @@ public class ViewDisplay {
         this.incursionView = new IncursionView(out);
         this.misionesView = new MisionesView(out);
         this.equipView = new EquipView(out);
+        this.travelView = new TravelView(out);
     }
 
     public void landingPage() { banner.landingPage(); }
@@ -75,5 +74,9 @@ public class ViewDisplay {
 
     public void displayEquipMenu(List<Item> inventory, Map<ItemCategory, List<Item>> equipped) {
         equipView.displayEquipMenu(inventory, equipped);
+    }
+
+    public void displayTravelMenu(City currentCity) {
+        travelView.displayTravelMenu(currentCity);
     }
 }
