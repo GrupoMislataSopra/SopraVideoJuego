@@ -45,7 +45,8 @@ class QuestRepositoryTest {
         @Test
         void whenOneQuestIsCompleted_shouldReturnOnlyPendingOnes() {
             QuestRepository repository = new QuestRepository();
-            Player player = new Player("Test", 0, PlayerRol.GUERRERO);
+            WorldMap worldMap=new WorldMap();
+            Player player = new Player("Test", 0, PlayerRol.GUERRERO,worldMap.getStartingCity());
             player.addItem(new Weapon("Espada", 100, 20));
             player.addItem(new Weapon("Hacha", 100, 30));
             repository.getIdQuest(1).completeQuest(player);
@@ -58,7 +59,8 @@ class QuestRepositoryTest {
         @Test
         void whenAllQuestsAreCompleted_shouldReturnEmptyList() {
             QuestRepository repository = new QuestRepository();
-            Player player = new Player("Test", 0, PlayerRol.GUERRERO);
+            WorldMap worldMap=new WorldMap();
+            Player player = new Player("Test", 0, PlayerRol.GUERRERO,worldMap.getStartingCity());
             player.addItem(new Weapon("Espada", 100, 20));
             player.addItem(new Weapon("Hacha", 100, 30));
             player.addItem(new Armor("Peto", 100, 10));

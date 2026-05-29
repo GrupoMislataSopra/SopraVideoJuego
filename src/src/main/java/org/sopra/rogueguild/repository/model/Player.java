@@ -13,13 +13,15 @@ public class Player {
             ItemCategory.BOOTS, new ArrayList<>()
     ));
     private PlayerRol playerRol;
+    private City currentCity;
 
 
 
-    public Player(String name, int gold, PlayerRol playerRol) {
+    public Player(String name, int gold, PlayerRol playerRol, City currentCity) {
         this.name = name;
         this.gold = gold;
         this.playerRol = playerRol;
+        this.currentCity=currentCity;
     }
 
     public String getName() { return name; }
@@ -62,6 +64,10 @@ public class Player {
         this.removeItem(item);
         return true;
     }
+    public City getCurrentCity() {
+        return currentCity;
+    }
+
 
     public int addGold(int amount) {
         int space = 500 - this.gold;
@@ -128,6 +134,46 @@ public class Player {
         List<Item> slots = itemEquipped.get(item.getCategory());
         return slots != null && slots.contains(item);
     }
+    private void travelTo(City destination){
+        if(destination==null||currentCity==null)return ;
+
+        List<City> route = findRoute(currentCity,destination);
+
+        if(route.isEmpty())return;
+
+        for (City city: route){
+
+        }
+        currentCity = destination;
+    }
+    private List findRoute(City start, City destination){
+        Queue<City>queue= new LinkedList<>();
+        Set<City>visited= new HashSet<>();
+        Map<City,City>previous = new HashMap<>();
+
+        queue.add(start);
+        visited.add(start);
+
+        while (true) {
+            City current = queue.poll();
+
+            if (current == destination) {
+                return buildRoute(previous, start, destination);
+            }
+            for (City connections : current.getConnections()) {
+                if (!visited.contains(connections)) {
+                    visited.add(connections);
+                    previous.put(connections, current);
+                    queue.add(connections);
+                }
+            }
+        }
+        return Collections.EMPTY_LIST;
+
+    }
+
+
+
 
     public Map<ItemCategory, List<Item>> getItemEquipped() {
         return new HashMap<>(itemEquipped);
