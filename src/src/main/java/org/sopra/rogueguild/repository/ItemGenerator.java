@@ -3,6 +3,7 @@ package org.sopra.rogueguild.repository;
 import org.sopra.rogueguild.repository.model.GeneratedItem;
 import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.ItemCategory;
+import org.sopra.rogueguild.repository.model.Potion;
 
 import java.util.*;
 
@@ -52,6 +53,12 @@ public class ItemGenerator {
         usedNames.add(name);
 
         int price = generatePriceItem(category);
+
+        if (category == ItemCategory.POTION) {
+            int healingPoints = random.nextInt(11) + 5;
+            return new Potion(name, price, healingPoints);
+        }
+
         return new GeneratedItem(name, price, category);
     }
 

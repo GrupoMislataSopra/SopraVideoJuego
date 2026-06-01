@@ -15,14 +15,14 @@ public class Player {
     private PlayerRol playerRol;
     private City currentCity;
     private static final int PLAYER_HIT_POINTS=20;
-    private int hitpoints;
+    private int hitPoints;
 
     public Player(String name, int gold, PlayerRol playerRol, City currentCity) {
         this.name = name;
         this.gold = gold;
         this.playerRol = playerRol;
         this.currentCity=currentCity;
-        this.hitpoints = PLAYER_HIT_POINTS;
+        this.hitPoints = PLAYER_HIT_POINTS;
     }
 
     public String getName() { return name; }
@@ -37,8 +37,8 @@ public class Player {
         return itemEquipped.get(ItemCategory.ARMOR).stream()
                 .mapToInt(i -> ((Armor) i).getShield()).sum();
     }
-    public int getHitpoints() {
-        return hitpoints;
+    public int getHitPoints() {
+        return hitPoints;
     }
     public int getPlayerHitPoints(){
         return PLAYER_HIT_POINTS;
@@ -200,5 +200,9 @@ public class Player {
 
     public Map<ItemCategory, List<Item>> getItemEquipped() {
         return new HashMap<>(itemEquipped);
+    }
+
+    public void heal(int healPoints) {
+        this.hitPoints = Math.min(hitPoints + healPoints, PLAYER_HIT_POINTS);
     }
 }
