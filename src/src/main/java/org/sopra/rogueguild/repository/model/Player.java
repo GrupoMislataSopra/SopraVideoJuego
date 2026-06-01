@@ -14,12 +14,15 @@ public class Player {
     ));
     private PlayerRol playerRol;
     private City currentCity;
+    private static final int PLAYER_HIT_POINTS=20;
+    private int hitpoints;
 
     public Player(String name, int gold, PlayerRol playerRol, City currentCity) {
         this.name = name;
         this.gold = gold;
         this.playerRol = playerRol;
         this.currentCity=currentCity;
+        this.hitpoints = PLAYER_HIT_POINTS;
     }
 
     public String getName() { return name; }
@@ -33,6 +36,12 @@ public class Player {
     public int getTotalShield() {
         return itemEquipped.get(ItemCategory.ARMOR).stream()
                 .mapToInt(i -> ((Armor) i).getShield()).sum();
+    }
+    public int getHitpoints() {
+        return hitpoints;
+    }
+    public int getPlayerHitPoints(){
+        return PLAYER_HIT_POINTS;
     }
 
     public void buy(Item item) {
@@ -54,6 +63,7 @@ public class Player {
     public PlayerRol getPlayerRol() {
         return playerRol;
     }
+
     public boolean sellItemIfIsNotEquipped(Item item, int amount) {
         if (item == null) return false;
         if (isEquipped(item)) return false;
@@ -65,6 +75,7 @@ public class Player {
     public City getCurrentCity() {
         return currentCity;
     }
+
 
 
     public int addGold(int amount) {
