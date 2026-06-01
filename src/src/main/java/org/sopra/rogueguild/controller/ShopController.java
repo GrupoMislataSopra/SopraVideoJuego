@@ -136,8 +136,15 @@ public class ShopController {
         if (player.getGold() < item.getPrice()) {
             return BuyResponse.notEnoughGold(item, player.getGold());
         }
+
         player.buy(item);
         repository.removeItem(id);
+
+        if (item instanceof Potion potion) {
+            player.removeItem(potion);
+            player.heal(potion.getHealingPoints());
+        }
+
         return BuyResponse.success(item);
     }
 
