@@ -165,6 +165,7 @@ public class ShopController {
 
     private void sellProcess(int id) {
         if(player.getInventory().isEmpty()){
+            view.showMessage("Tu inventario está vacío.");
             return;
         }
 
@@ -228,43 +229,39 @@ public class ShopController {
         }
         repository.refreshStock();
     }
-    private void questProcess(){
-    if (questRepository.getPendingQuest().isEmpty()){
-        view.showMessage("No hay misiones");
-        return;
-    }
-        view.misionView(questRepository.getQuests());
+    private void questProcess() {
+        List<Quest> pending = questRepository.getPendingQuest();
 
-    int questId;
+        if (pending.isEmpty()) {
+            view.showMessage("No hay misiones disponibles.");
+            return;
+        }
 
+        view.misionView(pending);
+
+        int questId;
         try {
             questId = Integer.parseInt(sc.nextLine());
-        }catch (NumberFormatException n){
-            view.showMessage("Introduce un valor correcto");
+        } catch (NumberFormatException n) {
+            view.showMessage("Introduce un valor correcto.");
             return;
         }
 
-        if (questId==0){
+        if (questId == 0) {
             return;
         }
 
-        Quest quest = questRepository.getIdQuest(questId);
-
-        if (quest == null){
-            view.showMessage("No hay misiones");
+        if (questId < 1 || questId > pending.size()) {
+            view.showMessage("Opción no válida.");
             return;
         }
 
+        Quest quest = pending.get(questId - 1);
 
-        if (quest.isCompleted()){
-            view.showMessage("Esta misión ya esta completada, elige otra");
-            return;
-        }
-
-        if (quest.completeQuest(player)){
-            view.showMessage("Misión completada");
-        }else {
-            view.showMessage("Tienes que cumplir los requisitos");
+        if (quest.completeQuest(player)) {
+            view.showMessage("Misión completada: " + quest.getDescription() + ". Has obtenido " + quest.getGoldReward() + " de oro.");
+        } else {
+            view.showMessage("Tienes que cumplir los requisitos.");
         }
     }
 

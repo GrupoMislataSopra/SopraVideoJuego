@@ -22,7 +22,7 @@ public class PlayerView {
         out.println("       | ░    ROL:           " + player.getPlayerRol());
         out.println("       | ░    ORO:           " + player.getGold() + " monedas");
         out.println("       | ░    CIUDAD:        " + player.getCurrentCity());
-        out.println("       | ░    VIDA:          " + player.getHitpoints()+" | "+player.getPlayerHitPoints());
+        out.println("       | ░    VIDA:          " + player.getHitPoints() + " | " + player.getPlayerHitPoints());
         if (player.getInventory().isEmpty()) {
             out.println("       | ░    INVENTARIO:    Vacío");
         } else {

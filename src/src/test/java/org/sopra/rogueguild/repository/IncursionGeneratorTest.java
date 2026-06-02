@@ -1,53 +1,158 @@
 package org.sopra.rogueguild.repository;
 
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
 import org.sopra.rogueguild.repository.model.Incursion;
-import org.sopra.rogueguild.repository.model.Item;
 import org.sopra.rogueguild.repository.model.ItemCategory;
 
-import java.util.List;
-import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class IncursionGeneratorTest {
 
-    @Mock
-    private Random random;
-    @Mock
-    ItemGenerator itemGenerator;
-    @InjectMocks
-    Item item;
     @Nested
-    class incursionGeneretaConquest{
+    class GenerateConquest {
         @Test
-        void shouldReturnFiveOtherItem_AItemCategoryAndGold(){
-            when(random.nextInt(100)).thenReturn(4);
-            when(random.nextInt(4)).thenReturn(2);
-            when(itemGenerator.generateItem(ItemCategory.OTHERS)).thenReturn(item);
-            when(item.getCategory()).thenReturn(ItemCategory.OTHERS);
+        void shouldReturnConquestWithCorrectShortName() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateConquest();
 
-            IncursionGenerator incursionGenerator = new IncursionGenerator(itemGenerator);
-            Incursion incursion = incursionGenerator.generateConquest();
-
-            assertAll(
-                    ()->assertEquals("Conquista",incursion.getShortName()),
-                    ()->assertEquals("Una campaña de conquista sobre territorios enemigos. La victoria trae consigo equipo valioso.",incursion.getDescription()),
-                    ()->assertEquals(10,incursion.getGoldReward()),
-                    ()->assertEquals(ItemCategory.OTHERS,incursion.getItemReward().getCategory())
-
-            );
-
+            assertEquals("Conquista", incursion.getShortName());
         }
 
+        @Test
+        void shouldReturnConquestWithCorrectDescription() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateConquest();
+
+            assertEquals(
+                    "Una campaña de conquista sobre territorios enemigos. La victoria trae consigo equipo valioso.",
+                    incursion.getDescription()
+            );
+        }
+
+        @Test
+        void shouldReturnConquestWithItemReward() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateConquest();
+
+            assertNotNull(incursion.getItemReward());
+        }
+
+        @RepeatedTest(20)
+        void goldRewardShouldBeMultipleOfFive() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateConquest();
+
+            assertEquals(0, incursion.getGoldReward() % 5);
+        }
+
+        @RepeatedTest(20)
+        void itemRewardCategoryShouldBeWeaponArmorOrOthers() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateConquest();
+
+            ItemCategory category = incursion.getItemReward().getCategory();
+            assertTrue(
+                    category == ItemCategory.WEAPON ||
+                            category == ItemCategory.ARMOR  ||
+                            category == ItemCategory.OTHERS
+            );
+        }
     }
 
+    @Nested
+    class GenerateLoot {
+        @Test
+        void shouldReturnLootWithCorrectShortName() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateLoot();
+
+            assertEquals("Saqueo", incursion.getShortName());
+        }
+
+        @Test
+        void shouldReturnLootWithCorrectDescription() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateLoot();
+
+            assertEquals(
+                    "Un asalto rápido a una caravana de mercaderes. El botín en oro es generoso.",
+                    incursion.getDescription()
+            );
+        }
+
+        @RepeatedTest(20)
+        void goldRewardShouldBeWithinRange() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateLoot();
+
+            assertTrue(incursion.getGoldReward() >= 100 && incursion.getGoldReward() <= 300,
+                    "Gold reward out of range: " + incursion.getGoldReward());
+        }
+
+        @RepeatedTest(20)
+        void goldRewardShouldBeMultipleOfFive() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateLoot();
+
+            assertEquals(0, incursion.getGoldReward() % 5);
+        }
+    }
+
+    @Nested
+    class GenerateMinor {
+        @Test
+        void shouldReturnMinorWithCorrectShortName() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateMinor();
+
+            assertEquals("Menor", incursion.getShortName());
+        }
+
+        @Test
+        void shouldReturnMinorWithCorrectDescription() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateMinor();
+
+            assertEquals(
+                    "Una escaramuza rápida en las afueras. Modestas recompensas pero sin grandes riesgos.",
+                    incursion.getDescription()
+            );
+        }
+
+        @Test
+        void shouldAlwaysHaveItemReward() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateMinor();
+
+            assertNotNull(incursion.getItemReward());
+        }
+
+        @RepeatedTest(20)
+        void itemRewardPriceShouldNotExceed50() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateMinor();
+
+            assertTrue(incursion.getItemReward().getPrice() <= 50,
+                    "Item price exceeds 50: " + incursion.getItemReward().getPrice());
+        }
+
+        @RepeatedTest(20)
+        void goldRewardShouldNotExceed30() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateMinor();
+
+            assertTrue(incursion.getGoldReward() <= 30,
+                    "Gold reward exceeds 30: " + incursion.getGoldReward());
+        }
+
+        @RepeatedTest(20)
+        void goldRewardShouldBeMultipleOfFive() {
+            IncursionGenerator generator = new IncursionGenerator(new ItemGenerator());
+            Incursion incursion = generator.generateMinor();
+
+            assertEquals(0, incursion.getGoldReward() % 5);
+        }
+    }
 }
