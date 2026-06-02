@@ -1,9 +1,6 @@
 package org.sopra.rogueguild.repository;
 
-import org.sopra.rogueguild.repository.model.GeneratedItem;
-import org.sopra.rogueguild.repository.model.Item;
-import org.sopra.rogueguild.repository.model.ItemCategory;
-import org.sopra.rogueguild.repository.model.Potion;
+import org.sopra.rogueguild.repository.model.*;
 
 import java.util.*;
 
@@ -59,7 +56,11 @@ public class ItemGenerator {
             return new Potion(name, price, healingPoints);
         }
 
-        return new GeneratedItem(name, price, category);
+        return switch (category) {
+            case WEAPON -> new Weapon(name, price, random.nextInt(50) + 10);
+            case ARMOR  -> new Armor(name, price, random.nextInt(20) + 5);
+            default     -> new GeneratedItem(name, price, category);
+        };
     }
 
     public Item generateItem(int maxPrice) {
