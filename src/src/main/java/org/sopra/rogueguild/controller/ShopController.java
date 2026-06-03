@@ -19,22 +19,20 @@ public class ShopController {
     private final WorldMap worldMap;
     private final Scanner sc;
 
-    public ShopController(Player p, ViewDisplay v, ShopRepository r, QuestRepository q, WorldMap w) {
+    public ShopController(Player p, ViewDisplay v, ShopRepository r, QuestRepository q, WorldMap w, Scanner sc) {
         this.player = p;
         this.view = v;
         this.repository = r;
         this.questRepository = q;
         this.worldMap = w;
         this.incursionGenerator = new IncursionGenerator(new ItemGenerator());
-        this.sc = new Scanner(System.in);
+        this.sc = sc;
     }
     public void start() {
         int opt;
         WorldEvent event = WorldEventGenerator.generate();
         repository.applyWorldEvent(event);
         view.showMessage(event.getDescription());
-        view.pressKeyMessage();
-        sc.nextLine();
         do {
             view.landingPage();
             view.playerStatus(player);
@@ -52,6 +50,7 @@ public class ShopController {
                 case 2 -> inventoryProcess();
                 case 3 -> incursionProcess();
                 case 4 -> questProcess();
+                case 5 -> travelProcess();
                 case 0 -> view.quitMessage();
             }
             view.pressKeyMessage();
@@ -76,6 +75,7 @@ public class ShopController {
                 view.displayStock(repository.getAllStock(), true);
                 try {
                     int itemId = Integer.parseInt(sc.nextLine());
+                    if (itemId == 0) return;
                     BuyResponse buyResponse = buyProcess(itemId);
                     view.buyResult(buyResponse);
                 } catch (NumberFormatException e) {
@@ -120,9 +120,6 @@ public class ShopController {
                     view.showMessage("Introduce un número válido.");
                 }
             }
-
-            case 5 -> travelProcess();
-
             case 0 -> {}
             default -> view.showMessage("Opción no válida.");
         }
@@ -150,6 +147,7 @@ public class ShopController {
 
     private void removeProcess(int id) {
         if (player.getInventory().isEmpty()) {
+            view.showMessage("Tu inventario está vacío.");
             return;
         }
 
@@ -177,13 +175,20 @@ public class ShopController {
         Item item = player.getInventory().get(id - 1);
         int amountGold = (int) (Math.round(item.getBasePrice() * 0.8 / 5) * 5);
 
+        view.showMessage("¿Quieres vender " + item.getName() + " por " + amountGold + " monedas? (1. Sí / 0. No)");
+
+        String input = sc.nextLine().trim();
+        if (!input.equals("1")) {
+            view.showMessage("Operación cancelada.");
+            return;
+        }
+
         if (!player.sellItemIfIsNotEquipped(item, amountGold)) {
             view.showMessage("No puedes vender un ítem equipado.");
             return;
         }
 
         repository.addItem(id,item);
-
         view.showMessage("Has vendido " + item.getName() + " por " + amountGold + " monedas.");
     }
 
@@ -225,7 +230,8 @@ public class ShopController {
         }
 
         if(gold<incursion.getGoldReward()){
-            view.showMessage("Limite excedido. Oro perdido");
+            int perdido = incursion.getGoldReward() - gold;
+            view.showMessage("Límite de oro alcanzado. Has perdido " + perdido + " monedas.");
         }
         repository.refreshStock();
     }
@@ -261,7 +267,7 @@ public class ShopController {
         if (quest.completeQuest(player)) {
             view.showMessage("Misión completada: " + quest.getDescription() + ". Has obtenido " + quest.getGoldReward() + " de oro.");
         } else {
-            view.showMessage("Tienes que cumplir los requisitos.");
+            view.showMessage("Tienes que cumplir los siguientes requisitos:" + quest.getRequirementsText());
         }
     }
 

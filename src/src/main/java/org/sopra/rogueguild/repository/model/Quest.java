@@ -69,4 +69,14 @@ public class Quest {
         isCompleted = true;
         return true;
     }
+
+    public String getRequirementsText() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<ItemCategory, Integer> entry : requiredItems.entrySet()) {
+            sb.append("\n  - ").append(entry.getValue()).append(" objeto(s) de tipo ").append(entry.getKey());
+        }
+        if (minDamage > 0) sb.append("\n  - Daño mínimo equipado: ").append(minDamage);
+        if (minShield > 0) sb.append("\n  - Escudo mínimo equipado: ").append(minShield);
+        return sb.toString();
+    }
 }

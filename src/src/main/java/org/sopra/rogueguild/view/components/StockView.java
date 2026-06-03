@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.sopra.rogueguild.repository.model.Item;
 
+import static org.sopra.rogueguild.view.utils.Ansi.GRAY;
+import static org.sopra.rogueguild.view.utils.Ansi.c;
+
 public class StockView {
     private final PrintStream out;
 
@@ -31,7 +34,10 @@ public class StockView {
                                 "-", item.getName(), item.getPrice());
                     }
                 });
-
+        out.println("|| |                                               | ||");
+        if (inPurchase) {
+            out.println("|| |" + c(GRAY, "  [0] Cancelar                                 ") + "| ||");
+        }
         out.println("|| |                                               | ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");

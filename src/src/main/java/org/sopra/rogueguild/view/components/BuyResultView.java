@@ -12,7 +12,7 @@ public class BuyResultView {
     public void show(BuyResponse r) {
         switch (r.getStatus()) {
         case SUCCESS ->
-                messages.showMessage("[+] " + r.getItem().getName() + " ya está en tu equipo!");
+                messages.showMessage("[+] " + r.getItem().getName() + " añadido a tu inventario!");
         case NOT_FOUND ->
                 messages.showMessage("[!] Ese objeto (" + r.getRequestedId() + ") no existe en nuestra tienda.");
         case NOT_ENOUGH_GOLD ->

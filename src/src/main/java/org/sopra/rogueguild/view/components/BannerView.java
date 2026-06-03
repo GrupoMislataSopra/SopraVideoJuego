@@ -42,6 +42,7 @@ public class BannerView {
         out.println("|| |" + c(Ansi.GRAY, "  [0] Volver                                   ") + "| ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");
+        out.print("\nElección: ");
     }
 
     public void inventoryMenu() {
@@ -57,5 +58,6 @@ public class BannerView {
         out.println("|| |" + c(Ansi.GRAY, "  [0] Volver                                   ") + "| ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");
+        out.print("\nElección: ");
     }
 }

@@ -16,7 +16,7 @@ public class MessageView {
     }
 
     public void pressKeyMessage() {
-        showMessage("Pulsa ENTER para continuar");
+        System.out.println("\nPulsa ENTER para continuar");
     }
 
     public void quitMessage() {
