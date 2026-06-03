@@ -21,12 +21,15 @@ public class PlayerView {
         out.println("       | ░    NOMBRE:        " + player.getName());
         out.println("       | ░    ROL:           " + player.getPlayerRol());
         out.println("       | ░    ORO:           " + player.getGold() + " monedas");
-        out.println("       | ░    CIUDAD:        " + player.getCurrentCity());
+        out.println("       | ░    CIUDAD:        " + player.getCurrentCity().getName());
         out.println("       | ░    VIDA:          " + player.getHitPoints() + " | " + player.getPlayerHitPoints());
+        out.println("       | ░    DAÑO:          " + player.getTotalDamage());
+        out.println("       | ░    ESCUDO:        " + player.getTotalShield());
         if (player.getInventory().isEmpty()) {
             out.println("       | ░    INVENTARIO:    Vacío");
         } else {
             out.println("       | ░    INVENTARIO:    " + player.getInventory().size() + " objetos");
         }       out.println();
+        out.print("\nElección: ");
     }
 }

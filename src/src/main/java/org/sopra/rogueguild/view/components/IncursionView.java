@@ -6,6 +6,9 @@ import org.sopra.rogueguild.repository.model.Quest;
 import java.io.PrintStream;
 import java.util.List;
 
+import static org.sopra.rogueguild.view.utils.Ansi.GRAY;
+import static org.sopra.rogueguild.view.utils.Ansi.c;
+
 public class IncursionView {
     private final PrintStream out;
 
@@ -21,7 +24,8 @@ public class IncursionView {
         out.println("|| |  [1] Conquista  - Equipo de alto valor        | ||");
         out.println("|| |  [2] Saqueo     - Oro en abundancia           | ||");
         out.println("|| |  [3] Menor      - Recompensa mixta limitada   | ||");
-        out.println("|| |  [0] Volver al menu principal                 | ||");
+        out.println("|| |                                               | ||");
+        out.println("|| |" + c(GRAY, "  [0] Volver al menu principal") + "                 | ||");
         out.println("|| |                                               | ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");

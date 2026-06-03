@@ -71,7 +71,11 @@ public class ItemGenerator {
             name = generateName(category);
         }
         usedNames.add(name);
-        return new GeneratedItem(name, price, category);
+        return switch (category) {
+            case WEAPON -> new Weapon(name, price, random.nextInt(50) + 10);
+            case ARMOR  -> new Armor(name, price, random.nextInt(20) + 5);
+            default     -> new GeneratedItem(name, price, category);
+        };
     }
 
     private String generateName(ItemCategory category) {

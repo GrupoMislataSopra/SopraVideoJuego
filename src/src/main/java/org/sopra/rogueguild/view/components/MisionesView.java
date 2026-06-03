@@ -16,22 +16,23 @@ public class MisionesView {
         out.println("  ___________________________________________________");
         out.println(" /  _______________________________________________  \\");
         out.println("|| /                                               \\ ||");
-        out.println("|| |           SISTEMA DE MSIONES                 | ||");
+        out.println("|| |           SISTEMA DE MISIONES                 | ||");
         out.println("|| | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ | ||");
         out.println("|| |                                               | ||");
         for (int i = 0; i<quests.size();i++){
             Quest quest = quests.get(i);
 
             if (!quest.isCompleted()){
-                out.printf("|| | [%d] %-28s %4d oro    | ||%n",
+                out.printf("|| | [%d] %-28s %4d oro     | ||%n",
                         i +1,
                         quest.getDescription(),
                         quest.getGoldReward());
             }
         }
-        out.println("|| |  [0] Volver al menu principal                 | ||");
+        out.println("|| | [0] Volver al menu principal                  | ||");
         out.println("|| |                                               | ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");
+        out.print("\nElección: ");
     }
 }

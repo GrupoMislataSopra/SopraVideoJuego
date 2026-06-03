@@ -22,6 +22,16 @@ public class App {
 
         System.out.print("Escribe el nombre de tu personaje: ");
         String name = sc.nextLine().trim();
+        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+
+        System.out.print("¿Cual es tu género? (1. Chico / 2. Chica): ");
+        boolean esFemenino = false;
+        while (true) {
+            String genero = sc.nextLine().trim();
+            if (genero.equals("1")) { esFemenino = false; break; }
+            if (genero.equals("2")) { esFemenino = true; break; }
+            System.out.print("Opción no válida, elige 1 o 2: ");
+        }
 
         System.out.println("\nElige tu rol de personaje:");
         System.out.println("1. Guerrero");
@@ -39,17 +49,22 @@ public class App {
                     case 2 -> playerRol = PlayerRol.HECHICERO;
                     case 3 -> playerRol = PlayerRol.PICARO;
                     case 4 -> playerRol = PlayerRol.ARQUERO;
-                    default -> System.out.println("Opción no válida, elige entre 1 y 4:");
+                    default -> System.out.print("Opción no válida, elige entre 1 y 4: ");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Introduce un número válido:");
+                System.out.print("Introduce un número válido: ");
             }
         }
 
-        System.out.println("\n¡Saludos, " + playerRol.getName().toLowerCase() + "/a " + name + "!\n");
+        String suffix = esFemenino ? "a" : "o";
+        String rolBase = playerRol.getName().toLowerCase();
+        rolBase = rolBase.substring(0, rolBase.length() - 1) + suffix;
+        System.out.println("\n¡Bienvenid" + suffix + ", " + rolBase + " " + name + "!\n");
+        System.out.print("Pulsa ENTER para comenzar tu aventura...");
+        sc.nextLine();
 
         Player player = new Player(name, 250, playerRol, worldMap.getStartingCity());
-        ShopController controller = new ShopController(player, view, repository, questRepository, worldMap);
+        ShopController controller = new ShopController(player, view, repository, questRepository, worldMap, sc);
         controller.start();
     }
 }
