@@ -103,6 +103,10 @@ public class ShopController {
             case 1 -> equipProcess();
             case 2 -> unequipProcess();
             case 3 -> {
+                if (player.getInventory().isEmpty()) {
+                    view.showMessage("Tu inventario está vacío.");
+                    return;
+                }
                 view.displayInventory(player.getInventory(), true);
                 try {
                     int sellItem = Integer.parseInt(sc.nextLine());
@@ -176,6 +180,7 @@ public class ShopController {
         int amountGold = (int) (Math.round(item.getBasePrice() * 0.8 / 5) * 5);
 
         view.showMessage("¿Quieres vender " + item.getName() + " por " + amountGold + " monedas? (1. Sí / 0. No)");
+        System.out.print("\nElección: ");
 
         String input = sc.nextLine().trim();
         if (!input.equals("1")) {

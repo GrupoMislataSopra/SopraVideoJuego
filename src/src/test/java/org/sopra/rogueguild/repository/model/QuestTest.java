@@ -61,7 +61,7 @@ class QuestTest {
         void whenPlayerCompletesQuest_shouldAddGold() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
             WorldMap worldMap=new WorldMap();
-            Player player = new Player("Test", 0, PlayerRol.GUERRERO,worldMap.getStartingCity());
+            Player player = new Player("Test", 100, PlayerRol.GUERRERO, worldMap.getStartingCity());
             Weapon weapon1 = new Weapon("Espada", 100, 20);
             Weapon weapon2 = new Weapon("Hacha", 150, 50);
 
@@ -92,7 +92,7 @@ class QuestTest {
         void whenPlayerHasNotRequiredItems_shouldNotAddGold() {
             Quest quest = new Quest("Danza de muerte", 50, Map.of(ItemCategory.WEAPON, 2));
             WorldMap worldMap=new WorldMap();
-            Player player = new Player("Test", 0, PlayerRol.GUERRERO,worldMap.getStartingCity());
+            Player player = new Player("Test", 100, PlayerRol.GUERRERO, worldMap.getStartingCity());
             Weapon weapon1 = new Weapon("Espada", 100, 20);
 
             player.addItem(weapon1);

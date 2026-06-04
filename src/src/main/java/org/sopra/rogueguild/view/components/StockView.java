@@ -41,5 +41,8 @@ public class StockView {
         out.println("|| |                                               | ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");
+        if (inPurchase) {
+            out.print("\nElección: ");
+        }
     }
 }

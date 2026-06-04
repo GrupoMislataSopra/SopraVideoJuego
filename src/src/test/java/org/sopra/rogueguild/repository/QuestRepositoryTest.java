@@ -66,6 +66,15 @@ class QuestRepositoryTest {
             player.addItem(new Armor("Peto", 100, 10));
             player.addItem(new GeneratedItem("Casco", 100, ItemCategory.HELMET));
             player.addItem(new GeneratedItem("Botas", 100, ItemCategory.BOOTS));
+
+            Weapon w1 = new Weapon("Espada2", 100, 30);
+            Armor a1 = new Armor("Peto2", 100, 20);
+            player.addItem(w1);
+            player.addItem(a1);
+            player.equipItem(w1);
+            player.equipItem(a1);
+
+
             repository.getIdQuest(1).completeQuest(player);
             repository.getIdQuest(2).completeQuest(player);
             repository.getIdQuest(3).completeQuest(player);
