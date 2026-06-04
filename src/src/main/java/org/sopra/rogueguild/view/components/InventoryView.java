@@ -34,5 +34,8 @@ public class InventoryView {
         out.println("|| |                                               | ||");
         out.println("|| \\_______________________________________________/ ||");
         out.println(" \\___________________________________________________/");
+        if (inRemoveProcess) {
+            out.print("\nElección: ");
+        }
     }
 }
